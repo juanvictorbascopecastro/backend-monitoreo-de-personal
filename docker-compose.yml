@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15.2
+    restart: always
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME_DEVELOPMENT}
+    container_name: monitore_persona
+    volumes:
+      - /postgres:/var/lib/postgresql/data # en el caso de windows
+      # - ./postgres:/var/lib/postgresql/data
+# en el caso de windows
+volumes:
+  postgresql-volume:
+    external: true
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+  #     PGADMIN_DEFAULT_PASSWORD: "admin"
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - postgres
