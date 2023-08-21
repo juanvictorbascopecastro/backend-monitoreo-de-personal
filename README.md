@@ -46,7 +46,7 @@ $ npm run test:cov
 
 ## Autor
 
-- Author - [Vicotr Bascope](https://github.com/juanvictorbascopecastro)
+- Author - [Victor Bascope](https://github.com/juanvictorbascopecastro)
 
 ## License
 

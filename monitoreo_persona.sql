@@ -96,3 +96,22 @@ CREATE TABLE ubicaciones (
   latitud double NOT NULL,
   FOREIGN KEY (id_ingreso) REFERENCES ingreso(id)
 )
+
+CREATE TABLE solicitud_reportarse (
+  id int(11) NOT NULL,
+  comentario int(11) DEFAULT NULL,
+  fecha datetime NOT NULL,
+  id_usuario int(11) NOT NULL,
+  FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+) 
+
+CREATE TABLE reportarse (
+  id int(11) NOT NULL,
+  fecha datetime NOT NULL,
+  id_solicitud int(11) NOT NULL,
+  id_persona int(11) NOT NULL,
+  comentario varchar(250) DEFAULT NULL,
+  fotografia text DEFAULT NULL,
+  FOREIGN KEY (id_solicitud) REFERENCES solicitud_reportarse(id)
+  FOREIGN KEY (id_persona) REFERENCES persona(id)
+)

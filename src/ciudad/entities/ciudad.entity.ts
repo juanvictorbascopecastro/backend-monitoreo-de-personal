@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Departamento {
+export class Ciudad {
   @PrimaryGeneratedColumn("increment")
   id: number;
 
@@ -10,4 +10,7 @@ export class Departamento {
 
   @Column({ nullable: true, type: "varchar", length: 200 })
   descripcion?: string;
+
+  @Column({ type: "int" })
+  id_departamento: number;
 }
