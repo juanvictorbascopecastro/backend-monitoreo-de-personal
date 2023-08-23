@@ -3,8 +3,11 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Usuario } from "./index";
 
 @Entity()
 export class Persona {
@@ -58,4 +61,8 @@ export class Persona {
   checkFieldsBeforeUpdate() {
     this.checkFieldsBeforeInsert();
   }
+
+  @OneToOne(() => Usuario, (us) => us.persona, { eager: true, cascade: true })
+  @JoinColumn()
+  usuario: Usuario;
 }

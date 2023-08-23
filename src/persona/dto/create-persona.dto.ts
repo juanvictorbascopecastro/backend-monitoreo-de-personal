@@ -1,11 +1,16 @@
 import {
+  IsDate,
   IsEmail,
+  IsIn,
   IsNumber,
   IsOptional,
   IsString,
   Matches,
   MinLength,
+  Validate,
 } from "class-validator";
+import { IsBeforeToday } from "./validador";
+import { ValidRoles } from "../interface";
 
 export class CreatePersonaDto {
   @IsString()
@@ -41,11 +46,17 @@ export class CreatePersonaDto {
   })
   password: string;
 
+  @IsOptional()
+  @IsDate({ message: "¡La fecha de nacimiento debe ser una fecha válida!" })
+  @Validate(IsBeforeToday)
   fecha_nacimiento: string;
+
+  @IsOptional()
+  @IsIn([ValidRoles.admin, ValidRoles.usuario], {
+    message: "¡El rol no es válido!",
+  })
+  rol: string;
 
   @IsNumber()
   id_ciudad: number;
 }
-
-// const expresionRegular = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-// return expresionRegular.test(this.email);

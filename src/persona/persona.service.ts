@@ -14,6 +14,7 @@ import { LoginPersonaDto } from "./dto/login-persona.dto";
 import * as bcrypt from "bcrypt";
 import { JwtPayload } from "./interface/jwt-payload.interface";
 import { JwtService } from "@nestjs/jwt";
+import { Usuario } from "./entities";
 
 @Injectable()
 export class PersonaService {
@@ -31,9 +32,15 @@ export class PersonaService {
         ...params,
         password: bcrypt.hashSync(password, 10),
       });
+      let user = null;
+      if (params.rol) {
+        user = new Usuario();
+        user.rol = params.rol;
+      }
+      if (user) data.usuario = user;
       await this.personaRepository.save(data);
       delete data.password;
-      return { ...data, token: this.getJwtToken({ email: data.email }) };
+      return data;
     } catch (err) {
       this.handleExceptions(err, createPersonaDto);
     }
@@ -66,35 +73,40 @@ export class PersonaService {
     return data;
   }
 
-  async login(loginPersonDto: LoginPersonaDto) {
-    //try{}catch(err){}
-    const { password, email } = loginPersonDto;
-    const user = await this.personaRepository.findOne({
-      where: { email },
-      select: {
-        id: true,
-        email: true,
-        password: true,
-        nombre: true,
-        apellido: true,
-        estado: true,
-        fecha_nacimiento: true,
-        ci: true,
-        telefono: true,
-        foto: true,
-        direccion: true,
-      },
-    });
-    if (!user) throw new UnauthorizedException("Datos Incorrecto!");
-    if (!bcrypt.compareSync(password, user.password))
-      throw new UnauthorizedException("Datos Incorrecto!");
-    delete user.password;
-    return {
-      ...user,
-      token: this.getJwtToken({ email: user.email }),
-    };
-    //TODO: retornar el JWT
-  }
+  // async login(loginPersonDto: LoginPersonaDto) {
+  //   const { password, email } = loginPersonDto;
+  //   const user = await this.personaRepository
+  //     .createQueryBuilder("persona")
+  //     .leftJoinAndSelect("persona.usuario", "usuario")
+  //     .where("persona.email = :email", { email })
+  //     .select([
+  //       "persona.id",
+  //       "persona.nombre",
+  //       "persona.apellido",
+  //       "persona.email",
+  //       "persona.password",
+  //       "persona.estado",
+  //       "persona.fecha_nacimiento",
+  //       "persona.ci",
+  //       "persona.telefono",
+  //       "persona.foto",
+  //       "persona.direccion",
+  //       "usuario.id",
+  //       "usuario.rol",
+  //     ])
+  //     .getOne();
+  //   if (!user) throw new UnauthorizedException("Datos Incorrecto!");
+  //   if (!bcrypt.compareSync(password, user.password))
+  //     throw new UnauthorizedException("Datos Incorrecto!");
+  //   delete user.password;
+  //   return {
+  //     ...user,
+  //     token: this.getJwtToken({
+  //       id: user.id,
+  //       rol: user.usuario ? user.usuario.rol : "promotor",
+  //     }),
+  //   };
+  // }
 
   private handleExceptions(err: any, data: CreatePersonaDto) {
     this.logger.error(err);
@@ -107,8 +119,8 @@ export class PersonaService {
     throw new InternalServerErrorException("Error con el servidor");
   }
   // generar el token
-  private getJwtToken(payload: JwtPayload) {
-    const token = this.jwtService.sign(payload);
-    return token;
-  }
+  // private getJwtToken(payload: JwtPayload) {
+  //   const token = this.jwtService.sign(payload);
+  //   return token;
+  // }
 }
