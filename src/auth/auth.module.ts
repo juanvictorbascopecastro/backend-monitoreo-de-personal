@@ -4,14 +4,16 @@ import { AuthController } from "./auth.controller";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
-import { PersonaModule } from "src/persona/persona.module";
 import { JwtStrategy } from "./strategies/jwt.strategy";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { Persona, Usuario } from "src/persona/entities";
 
 @Module({
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
   imports: [
     ConfigModule,
+    TypeOrmModule.forFeature([Persona, Usuario]),
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -25,8 +27,7 @@ import { JwtStrategy } from "./strategies/jwt.strategy";
         };
       },
     }),
-    PersonaModule,
   ],
-  exports: [PassportModule, JwtModule],
+  exports: [PassportModule, JwtModule, JwtStrategy],
 })
 export class AuthModule {}

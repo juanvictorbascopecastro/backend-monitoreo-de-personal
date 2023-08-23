@@ -3,17 +3,13 @@ import {
   Logger,
   NotFoundException,
   InternalServerErrorException,
-  UnauthorizedException,
 } from "@nestjs/common";
 import { CreatePersonaDto } from "./dto/create-persona.dto";
 import { UpdatePersonaDto } from "./dto/update-persona.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Persona } from "./entities/persona.entity";
 import { Repository } from "typeorm";
-import { LoginPersonaDto } from "./dto/login-persona.dto";
 import * as bcrypt from "bcrypt";
-import { JwtPayload } from "./interface/jwt-payload.interface";
-import { JwtService } from "@nestjs/jwt";
 import { Usuario } from "./entities";
 
 @Injectable()
@@ -21,8 +17,7 @@ export class PersonaService {
   private readonly logger = new Logger("PersonaService");
   constructor(
     @InjectRepository(Persona)
-    private readonly personaRepository: Repository<Persona>,
-    private readonly jwtService: JwtService
+    private readonly personaRepository: Repository<Persona>
   ) {}
 
   async create(createPersonaDto: CreatePersonaDto) {
@@ -73,41 +68,6 @@ export class PersonaService {
     return data;
   }
 
-  // async login(loginPersonDto: LoginPersonaDto) {
-  //   const { password, email } = loginPersonDto;
-  //   const user = await this.personaRepository
-  //     .createQueryBuilder("persona")
-  //     .leftJoinAndSelect("persona.usuario", "usuario")
-  //     .where("persona.email = :email", { email })
-  //     .select([
-  //       "persona.id",
-  //       "persona.nombre",
-  //       "persona.apellido",
-  //       "persona.email",
-  //       "persona.password",
-  //       "persona.estado",
-  //       "persona.fecha_nacimiento",
-  //       "persona.ci",
-  //       "persona.telefono",
-  //       "persona.foto",
-  //       "persona.direccion",
-  //       "usuario.id",
-  //       "usuario.rol",
-  //     ])
-  //     .getOne();
-  //   if (!user) throw new UnauthorizedException("Datos Incorrecto!");
-  //   if (!bcrypt.compareSync(password, user.password))
-  //     throw new UnauthorizedException("Datos Incorrecto!");
-  //   delete user.password;
-  //   return {
-  //     ...user,
-  //     token: this.getJwtToken({
-  //       id: user.id,
-  //       rol: user.usuario ? user.usuario.rol : "promotor",
-  //     }),
-  //   };
-  // }
-
   private handleExceptions(err: any, data: CreatePersonaDto) {
     this.logger.error(err);
     if (err.code === "23505") {
@@ -118,9 +78,4 @@ export class PersonaService {
     console.log(err);
     throw new InternalServerErrorException("Error con el servidor");
   }
-  // generar el token
-  // private getJwtToken(payload: JwtPayload) {
-  //   const token = this.jwtService.sign(payload);
-  //   return token;
-  // }
 }

@@ -10,7 +10,7 @@ import {
   Validate,
 } from "class-validator";
 import { IsBeforeToday } from "./validador";
-import { ValidRoles } from "../interface";
+import { ValidRoles } from "./../../auth/interface";
 
 export class CreatePersonaDto {
   @IsString()
