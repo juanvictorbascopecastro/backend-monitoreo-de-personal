@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_PASSWORD: ${DB_PASS}
       POSTGRES_DB: ${DB_NAME_DEVELOPMENT}
-    container_name: monitore_persona
+    container_name: monitoreo_persona
     volumes:
       - /postgres:/var/lib/postgresql/data # en el caso de windows
       # - ./postgres:/var/lib/postgresql/data

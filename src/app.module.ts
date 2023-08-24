@@ -3,11 +3,13 @@ import { ConfigModule } from "@nestjs/config";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from "path";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { DepartamentoModule } from "./departamento/departamento.module";
-import { CiudadModule } from "./ciudad/ciudad.module";
-import { PersonaModule } from "./persona/persona.module";
-import { ReportarseModule } from "./reportarse/reportarse.module";
-import { AuthModule } from "./auth/auth.module";
+import { DepartamentoModule } from "./modules/departamento/departamento.module";
+import { CiudadModule } from "./modules/ciudad/ciudad.module";
+import { PersonaModule } from "./modules/persona/persona.module";
+import { ReportarseModule } from "./modules/reportarse/reportarse.module";
+import { AuthModule } from "./modules/auth/auth.module";
+import { IngresoModule } from "./modules/ingreso/ingreso.module";
+import { SeedModule } from "./modules/seed/seed.module";
 
 @Module({
   imports: [
@@ -23,18 +25,19 @@ import { AuthModule } from "./auth/auth.module";
       synchronize: Boolean(process.env.DB_SYNC), // solo para desarrollo
       retryAttempts: 10,
       retryDelay: 3000,
-      entities: [__dirname + "src/**/*.entity.{ts,js}"],
+      entities: [__dirname + "src/modules/**/*.entity.{ts,js}"],
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, "..", "public"),
     }),
+    PersonaModule,
+    AuthModule,
     DepartamentoModule,
     CiudadModule,
-    PersonaModule,
     ReportarseModule,
-    AuthModule,
+    IngresoModule,
+    SeedModule,
   ],
   controllers: [],
-  // exports: [PersonaModule],
 })
 export class AppModule {}
