@@ -1,5 +1,12 @@
+import { Persona } from "src/modules/persona/entities";
 import { Departamento } from "../../departamento/entities/departamento.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity()
 export class Ciudad {
@@ -17,4 +24,7 @@ export class Ciudad {
     nullable: false,
   })
   departamento: Departamento;
+
+  @OneToMany(() => Persona, (c) => c.ciudad, { cascade: false })
+  persona: Persona;
 }

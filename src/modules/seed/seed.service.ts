@@ -22,9 +22,8 @@ export class SeedService {
     // await this.deleteTables();
     const departamento = await this.insertDepartamento();
     const ciudad = await this.insertCiudad(departamento);
-    console.log(ciudad);
-    await this.insertUsers(ciudad);
-
+    const usuarios = await this.insertUsers(ciudad);
+    console.log(usuarios);
     return "SEED EXECUTED";
   }
   private async insertDepartamento() {
@@ -37,21 +36,22 @@ export class SeedService {
     return datas[0];
   }
   private async insertCiudad(departamento: Departamento) {
-    const ciudades = initialData.departamento;
+    const ciudades = initialData.ciudad;
     const insertPromises = [];
     ciudades.forEach((ciudad: CreateCiudadDto) => {
       insertPromises.push(this.ciudadService.create(ciudad, departamento));
     });
-    await Promise.all(insertPromises);
-    return insertPromises[0];
+    const datas = await Promise.all(insertPromises);
+    return datas[0];
   }
   private async insertUsers(ciudad: Ciudad) {
     const seedUsers = initialData.usuarios;
     const users: Persona[] = [];
-    seedUsers.forEach((user) => {
+    seedUsers.forEach((user: Persona) => {
+      user.ciudad = ciudad;
       users.push(this.userRepository.create(user));
     });
     const dbUsers = await this.userRepository.save(seedUsers);
-    return dbUsers[0];
+    return dbUsers;
   }
 }

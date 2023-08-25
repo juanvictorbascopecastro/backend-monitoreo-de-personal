@@ -4,12 +4,14 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Usuario } from "./index";
 import { Ingreso } from "src/modules/ingreso/entities/ingreso.entity";
+import { Ciudad } from "src/modules/ciudad/entities/ciudad.entity";
 
 @Entity()
 export class Persona {
@@ -46,9 +48,6 @@ export class Persona {
   @Column({ type: "date", nullable: true })
   fecha_nacimiento: string;
 
-  @Column({ type: "int" })
-  id_ciudad: number;
-
   @Column({ type: "text", nullable: true })
   foto?: string;
 
@@ -70,4 +69,10 @@ export class Persona {
 
   @OneToMany(() => Ingreso, (ing) => ing.persona, { cascade: true })
   ingreso: Ingreso[];
+
+  @ManyToOne(() => Ciudad, (dpto) => dpto.persona, {
+    eager: true,
+    nullable: false,
+  })
+  ciudad: Ciudad;
 }

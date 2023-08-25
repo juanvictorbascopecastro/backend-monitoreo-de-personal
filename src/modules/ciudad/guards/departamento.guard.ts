@@ -1,5 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { Observable } from "rxjs";
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { DepartamentoService } from "src/modules/departamento/departamento.service";
 
 @Injectable()
@@ -11,6 +15,10 @@ export class DepartamentoGuard implements CanActivate {
     const departamento = await this.departamentoService.findOne(
       id_departamento
     );
+    if (!departamento)
+      throw new NotFoundException(
+        `El departamento con el id ${id_departamento} no existe!`
+      );
     request.departamento = departamento;
     return true;
   }

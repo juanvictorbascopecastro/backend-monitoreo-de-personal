@@ -38,7 +38,6 @@ export class CiudadService {
     departamento: Departamento
   ) {
     const { id_departamento, ...params } = updateCiudadDto;
-    console.log(params);
     const data = await this.ciudadRepository.preload({
       id: id,
       ...params,

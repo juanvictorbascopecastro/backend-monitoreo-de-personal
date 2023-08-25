@@ -8,19 +8,21 @@ import { CreatePersonaDto } from "./dto/create-persona.dto";
 import { UpdatePersonaDto } from "./dto/update-persona.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Persona } from "./entities/persona.entity";
-import { Repository } from "typeorm";
+import { DataSource, Repository } from "typeorm";
 import * as bcrypt from "bcrypt";
 import { Usuario } from "./entities";
+import { Ciudad } from "../ciudad/entities/ciudad.entity";
 
 @Injectable()
 export class PersonaService {
   private readonly logger = new Logger("PersonaService");
   constructor(
     @InjectRepository(Persona)
-    private readonly personaRepository: Repository<Persona>
+    private readonly personaRepository: Repository<Persona>,
+    private readonly dataSource: DataSource
   ) {}
 
-  async create(createPersonaDto: CreatePersonaDto) {
+  async create(createPersonaDto: CreatePersonaDto, ciudad: Ciudad) {
     try {
       const { password, ...params } = createPersonaDto;
       const data = this.personaRepository.create({
@@ -31,16 +33,49 @@ export class PersonaService {
       if (params.rol) {
         user = new Usuario();
         user.rol = params.rol;
+        data.usuario = user;
       }
-      if (user) data.usuario = user;
+      data.ciudad = ciudad;
       await this.personaRepository.save(data);
       delete data.password;
       return data;
     } catch (err) {
-      this.handleExceptions(err, createPersonaDto);
+      this.handleExceptions(err, createPersonaDto.email);
     }
   }
+  async update(id: number, updatePersonaDto: UpdatePersonaDto, ciudad: Ciudad) {
+    const { id_ciudad, ...params } = updatePersonaDto;
+    const data = await this.personaRepository.preload({
+      id: id,
+      ...params,
+    });
+    if (!data)
+      throw new NotFoundException(`La ciudad con el id ${id} no existe!`);
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
 
+    try {
+      let user;
+      if (params.rol) {
+        user = new Usuario();
+        user.rol = params.rol;
+        data.usuario = user;
+      }
+      if (ciudad) {
+        data.ciudad = ciudad;
+      }
+      await queryRunner.manager.save(data);
+      await queryRunner.commitTransaction();
+      await queryRunner.release();
+
+      return this.findOne(id);
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      await queryRunner.release();
+      this.handleExceptions(error, updatePersonaDto.nombre);
+    }
+  }
   findAll() {
     try {
       return this.personaRepository.find({});
@@ -56,10 +91,6 @@ export class PersonaService {
     return data;
   }
 
-  update(id: number, updatePersonaDto: UpdatePersonaDto) {
-    return `This action updates a #${id} persona`;
-  }
-
   async remove(id: number) {
     const data = await this.findOne(id);
     if (!data)
@@ -68,14 +99,11 @@ export class PersonaService {
     return data;
   }
 
-  private handleExceptions(err: any, data: CreatePersonaDto) {
+  private handleExceptions(err: any, val: string) {
     this.logger.error(err);
-    if (err.code === "23505") {
-      throw new InternalServerErrorException(
-        `Ya existe el correo ${data?.email}!`
-      );
+    if (err.code === "23505" && val) {
+      throw new InternalServerErrorException(`Ya existe el correo ${val}!`);
     }
-    console.log(err);
     throw new InternalServerErrorException("Error con el servidor");
   }
 }
