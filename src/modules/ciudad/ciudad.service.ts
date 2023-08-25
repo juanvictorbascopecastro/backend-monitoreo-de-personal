@@ -3,10 +3,11 @@ import {
   Logger,
   InternalServerErrorException,
   NotFoundException,
+  BadRequestException,
 } from "@nestjs/common";
 import { CreateCiudadDto } from "./dto/create-ciudad.dto";
 import { UpdateCiudadDto } from "./dto/update-ciudad.dto";
-import { DataSource, Repository } from "typeorm";
+import { DataSource, QueryFailedError, Repository } from "typeorm";
 import { Ciudad } from "./entities/ciudad.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Departamento } from "../departamento/entities/departamento.entity";
@@ -79,14 +80,26 @@ export class CiudadService {
     const data = await this.findOne(id);
     if (!data)
       throw new NotFoundException(`La ciudad con el id ${id} no existe!`);
-    this.ciudadRepository.remove(data);
-    return data;
+    try {
+      await this.ciudadRepository.remove(data);
+      return data;
+    } catch (err) {
+      this.handleExceptions(err, null);
+    }
   }
   private handleExceptions(err: any, nombre: string) {
     this.logger.error(err);
+    if (
+      err instanceof QueryFailedError &&
+      err.message.includes("violates foreign key constraint")
+    ) {
+      throw new BadRequestException(
+        "¡No puede eliminar esta ciudad porque se está utilizando en otros registros!"
+      );
+    }
     if (err.code === "23505" && nombre) {
       throw new InternalServerErrorException(
-        `Ya esta registrado la ciudad de ${nombre}!`
+        `¡Ya esta registrado la ciudad de ${nombre}!`
       );
     }
     console.log(err);

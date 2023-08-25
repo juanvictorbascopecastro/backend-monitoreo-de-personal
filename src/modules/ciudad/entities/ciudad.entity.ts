@@ -7,6 +7,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { ZonasEstrategica } from "src/modules/zonas_estrategica/entities/zonas_estrategica.entity";
 
 @Entity()
 export class Ciudad {
@@ -27,4 +28,7 @@ export class Ciudad {
 
   @OneToMany(() => Persona, (c) => c.ciudad, { cascade: false })
   persona: Persona;
+
+  @OneToMany(() => ZonasEstrategica, (c) => c.ciudad, { cascade: false })
+  zonas: ZonasEstrategica;
 }

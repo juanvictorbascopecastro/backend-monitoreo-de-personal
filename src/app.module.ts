@@ -10,6 +10,7 @@ import { ReportarseModule } from "./modules/reportarse/reportarse.module";
 import { AuthModule } from "./modules/auth/auth.module";
 import { IngresoModule } from "./modules/ingreso/ingreso.module";
 import { SeedModule } from "./modules/seed/seed.module";
+import { ZonasEstrategicaModule } from "./modules/zonas_estrategica/zonas_estrategica.module";
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { SeedModule } from "./modules/seed/seed.module";
     ReportarseModule,
     IngresoModule,
     SeedModule,
+    ZonasEstrategicaModule,
   ],
   controllers: [],
 })

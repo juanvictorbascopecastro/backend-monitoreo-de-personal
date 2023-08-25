@@ -67,12 +67,12 @@ export class Persona {
   @JoinColumn()
   usuario: Usuario;
 
-  @OneToMany(() => Ingreso, (ing) => ing.persona, { cascade: true })
-  ingreso: Ingreso[];
-
   @ManyToOne(() => Ciudad, (dpto) => dpto.persona, {
     eager: true,
     nullable: false,
   })
   ciudad: Ciudad;
+
+  @OneToMany(() => Ingreso, (ing) => ing.persona, { cascade: true })
+  ingreso: Ingreso[];
 }

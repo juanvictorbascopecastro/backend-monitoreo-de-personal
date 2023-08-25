@@ -1,3 +1,4 @@
+import { ZonasEstrategica } from "src/modules/zonas_estrategica/entities/zonas_estrategica.entity";
 import { Persona } from "../../persona/entities";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
@@ -15,9 +16,15 @@ export class Ingreso {
   @Column({ type: "text", nullable: true })
   detalles: string;
 
-  @Column({ type: "int" })
-  id_zona: number;
-
-  @ManyToOne(() => Persona, (per) => per.ingreso, { eager: true })
+  @ManyToOne(() => Persona, (per) => per.ingreso, {
+    eager: true,
+    nullable: false,
+  })
   persona: Persona;
+
+  @ManyToOne(() => ZonasEstrategica, (per) => per.ingreso, {
+    eager: true,
+    nullable: false,
+  })
+  zona: ZonasEstrategica;
 }

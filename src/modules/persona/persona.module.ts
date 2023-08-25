@@ -15,6 +15,6 @@ import { CiudadModule } from "../ciudad/ciudad.module";
     AuthModule,
     CiudadModule,
   ],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, PersonaService],
 })
 export class PersonaModule {}
