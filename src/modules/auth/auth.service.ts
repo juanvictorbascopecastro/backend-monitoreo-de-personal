@@ -52,15 +52,15 @@ export class AuthService {
   }
 
   getProfile() {
-    return `This action returns all auth`;
+    return `Obtener el perfil de usuario`;
   }
 
   updateProfile() {
-    return `This action returns all auth`;
+    return `Editar el perfil de usuario`;
   }
 
   deleteProfile() {
-    return `This action returns a # aut`;
+    return `Eliminar su cuenta de usuario`;
   }
   // generar el token
   private getJwtToken(payload: JwtPayload) {

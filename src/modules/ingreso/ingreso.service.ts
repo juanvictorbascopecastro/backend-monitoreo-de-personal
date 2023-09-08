@@ -14,7 +14,7 @@ import { ZonasEstrategica } from "../zonas_estrategica/entities/zonas_estrategic
 
 @Injectable()
 export class IngresoService {
-  private readonly logger = new Logger("CiudadService");
+  private readonly logger = new Logger("IngresoService");
   constructor(
     @InjectRepository(Ingreso)
     private readonly ingresoRepository: Repository<Ingreso>,
@@ -50,7 +50,7 @@ export class IngresoService {
       ...params,
     });
     if (!data)
-      throw new NotFoundException(`La zona con el id ${id} no existe!`);
+      throw new NotFoundException(`El ingreso con el id ${id} no existe!`);
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
@@ -76,11 +76,14 @@ export class IngresoService {
       .leftJoinAndSelect("ingreso.persona", "persona")
       .leftJoinAndSelect("persona.usuario", "usuario")
       .leftJoinAndSelect("ingreso.zona", "zona")
+      .leftJoinAndSelect("ingreso.salida", "salida")
       .select([
         "ingreso.id",
         "ingreso.fecha",
         "ingreso.detalles",
-        "ingreso.id_zona",
+        "salida.id",
+        "salida.fecha",
+        "salida.detalles",
         "persona.id",
         "persona.nombre",
         "persona.apellido",
@@ -108,7 +111,6 @@ export class IngresoService {
         "ingreso.id",
         "ingreso.fecha",
         "ingreso.detalles",
-        "ingreso.id_zona",
         "persona.id",
         "persona.nombre",
         "persona.apellido",

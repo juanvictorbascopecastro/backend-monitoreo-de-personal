@@ -12,6 +12,7 @@ import {
 import { Usuario } from "./index";
 import { Ingreso } from "src/modules/ingreso/entities/ingreso.entity";
 import { Ciudad } from "src/modules/ciudad/entities/ciudad.entity";
+import { Ubicacion } from "src/modules/ubicacion/entities/ubicacion.entity";
 
 @Entity()
 export class Persona {
@@ -75,4 +76,8 @@ export class Persona {
 
   @OneToMany(() => Ingreso, (ing) => ing.persona, { cascade: true })
   ingreso: Ingreso[];
+
+  // ubicaciones
+  @OneToMany(() => Ubicacion, (ing) => ing.persona, { cascade: true })
+  ubicacion: Ubicacion[];
 }

@@ -87,7 +87,7 @@ export class PersonaService {
   async findOne(id: number) {
     const data = await this.personaRepository.findOneBy({ id });
     if (!data)
-      throw new NotFoundException(`El departamento con el id ${id} no existe!`);
+      throw new NotFoundException(`El usuario con el id ${id} no existe!`);
     return data;
   }
 

@@ -94,6 +94,7 @@ CREATE TABLE ubicaciones (
   fecha datetime NOT NULL,
   longitud double NOT NULL,
   latitud double NOT NULL,
+  bateria: float NULL,
   FOREIGN KEY (id_ingreso) REFERENCES ingreso(id)
 )
 

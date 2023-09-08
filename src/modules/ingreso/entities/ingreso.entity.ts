@@ -1,6 +1,15 @@
 import { ZonasEstrategica } from "src/modules/zonas_estrategica/entities/zonas_estrategica.entity";
 import { Persona } from "../../persona/entities";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Ubicacion } from "src/modules/ubicacion/entities/ubicacion.entity";
+import { Salida } from "src/modules/salida/entities/salida.entity";
 
 @Entity()
 export class Ingreso {
@@ -27,4 +36,11 @@ export class Ingreso {
     nullable: false,
   })
   zona: ZonasEstrategica;
+
+  // ubicaciones
+  @OneToMany(() => Ubicacion, (ing) => ing.ingreso, { cascade: true })
+  ubicacion: Ubicacion[];
+
+  @OneToOne(() => Salida, (sal) => sal.ingreso, { cascade: true })
+  salida: Salida;
 }
