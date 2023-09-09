@@ -17,11 +17,23 @@ export class SalidaService {
   constructor(
     @InjectRepository(Salida)
     private readonly salidaRepository: Repository<Salida>,
-    private readonly dataSource: DataSource
+    private readonly dataSource: DataSource // private ingresoService: IngresoService
   ) {}
 
   async create(createSalidaDto: CreateSalidaDto, ingreso: Ingreso) {
     try {
+      // verificamos si existe ya una salida registrada, debe modificarla
+      const dataIngreso = await this.findByIngreso(ingreso.id);
+      if (dataIngreso) {
+        return await this.update(
+          dataIngreso.id,
+          {
+            id_ingreso: createSalidaDto.id_ingreso,
+            detalles: createSalidaDto.detalles,
+          },
+          ingreso
+        );
+      }
       const data = this.salidaRepository.create({
         ...createSalidaDto,
         ingreso,
@@ -67,20 +79,20 @@ export class SalidaService {
   async findOne(id: number) {
     const data = await this.salidaRepository
       .createQueryBuilder("salida")
-      .leftJoinAndSelect("salida.ingreso", "ingreso")
+      .innerJoinAndSelect("salida.ingreso", "ingreso")
       .select([
         "salida.id AS id",
         "salida.fecha AS fecha",
         "salida.detalles AS detalles",
         "ingreso.id AS id_ingreso",
       ])
-      .where("ingreso.id = :id", { id })
-      .getOne();
+      .where("salida.id = :id", { id })
+      .getRawOne();
 
     // const data = await this.salidaRepository.findOne({
     //   where: { id },
-    //   relations: [],
-    //   select: ["fecha", "detalles"],
+    //   // relations: [],
+    //   select: ["id", "fecha", "detalles"],
     // });
     if (!data)
       throw new NotFoundException(
@@ -97,6 +109,20 @@ export class SalidaService {
       );
     this.salidaRepository.remove(data);
     return data;
+  }
+  // buscamos por el ingreso
+  private async findByIngreso(id: number) {
+    return await this.salidaRepository
+      .createQueryBuilder("salida")
+      .innerJoinAndSelect("salida.ingreso", "ingreso")
+      .select([
+        "salida.id AS id",
+        "salida.fecha AS fecha",
+        "salida.detalles AS detalles",
+        "ingreso.id AS id_ingreso",
+      ])
+      .where("ingreso.id = :id", { id })
+      .getRawOne();
   }
 
   private handleExceptions(err: any) {

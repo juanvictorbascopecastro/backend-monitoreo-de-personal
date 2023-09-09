@@ -125,6 +125,7 @@ export class IngresoService {
         "zona.latitud",
         "zona.radio",
       ])
+      .orderBy("ingreso.fecha", "DESC")
       .where("ingreso.id = :id", { id })
       .getOne();
     if (!data)

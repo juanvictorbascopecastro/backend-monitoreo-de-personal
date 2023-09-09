@@ -64,6 +64,7 @@ export class UbicacionService {
         "persona.id AS id_persona",
       ])
       .where(whereQuery, paramsQuery)
+      .orderBy("ubicacion.fecha", "DESC")
       .getRawMany();
   }
 
