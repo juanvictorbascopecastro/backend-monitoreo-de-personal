@@ -1,0 +1,1 @@
+{"version":3,"file":"zona.decorator.js","sourceRoot":"","sources":["../../../../src/modules/ingreso/decorators/zona.decorator.ts"],"names":[],"mappings":";;;AAAA,2CAAwE;AAG3D,QAAA,aAAa,GAAG,IAAA,6BAAoB,EAC/C,CAAC,IAAY,EAAE,GAAqB,EAAoB,EAAE;IACxD,MAAM,GAAG,GAAG,GAAG,CAAC,YAAY,EAAE,CAAC,UAAU,EAAE,CAAC;IAC5C,OAAO,GAAG,CAAC,IAAI,CAAC;AAClB,CAAC,CACF,CAAC"}

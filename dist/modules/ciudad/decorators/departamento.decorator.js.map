@@ -1,0 +1,1 @@
+{"version":3,"file":"departamento.decorator.js","sourceRoot":"","sources":["../../../../src/modules/ciudad/decorators/departamento.decorator.ts"],"names":[],"mappings":";;;AAAA,2CAIwB;AAGX,QAAA,qBAAqB,GAAG,IAAA,6BAAoB,EACvD,CAAC,IAAY,EAAE,GAAqB,EAAgB,EAAE;IACpD,MAAM,GAAG,GAAG,GAAG,CAAC,YAAY,EAAE,CAAC,UAAU,EAAE,CAAC;IAC5C,OAAO,GAAG,CAAC,YAAY,CAAC;AAC1B,CAAC,CACF,CAAC"}
