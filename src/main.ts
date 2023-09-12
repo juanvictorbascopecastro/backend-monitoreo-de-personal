@@ -11,7 +11,6 @@ async function main() {
       forbidNonWhitelisted: true, // regresa un error
     })
   );
-  app.useGlobalInterceptors(new CustomInterceptor());
   await app.listen(3000);
 }
 main();
