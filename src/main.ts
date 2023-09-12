@@ -11,6 +11,6 @@ async function main() {
       forbidNonWhitelisted: true, // regresa un error
     })
   );
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
 }
 main();
