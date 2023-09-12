@@ -13,6 +13,7 @@ import { SeedModule } from "./modules/seed/seed.module";
 import { ZonasEstrategicaModule } from "./modules/zonas_estrategica/zonas_estrategica.module";
 import { UbicacionModule } from "./modules/ubicacion/ubicacion.module";
 import { SalidaModule } from "./modules/salida/salida.module";
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { SalidaModule } from "./modules/salida/salida.module";
     ZonasEstrategicaModule,
     UbicacionModule,
     SalidaModule,
+    FilesModule,
   ],
   controllers: [],
 })

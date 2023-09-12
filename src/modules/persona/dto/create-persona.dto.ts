@@ -15,6 +15,7 @@ import { ValidRoles } from "./../../auth/interface";
 
 export class CreatePersonaDto {
   @IsString()
+  @IsNotEmpty()
   nombre: string;
 
   @IsOptional()
@@ -26,7 +27,7 @@ export class CreatePersonaDto {
   direccion?: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   ci?: string;
 
   @IsString()
@@ -34,6 +35,7 @@ export class CreatePersonaDto {
   telefono?: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsEmail(
     {},
     { message: "El correo electrónico debe ser un correo electrónico!" }
@@ -41,6 +43,7 @@ export class CreatePersonaDto {
   email: string;
 
   @IsString()
+  @IsNotEmpty()
   @MinLength(6)
   @Matches(/(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
     message: "La contraseña debe tener mayúsculas, minúsculas y un número",
@@ -58,7 +61,7 @@ export class CreatePersonaDto {
   })
   rol: string;
 
-  @IsNumber()
+  //@IsNumber()
   @IsNotEmpty({ message: "El id_ciudad es requerido!" })
   id_ciudad: number;
 }

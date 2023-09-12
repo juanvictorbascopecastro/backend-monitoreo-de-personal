@@ -1,15 +1,6 @@
 import { PartialType } from "@nestjs/mapped-types";
 import { CreatePersonaDto } from "./create-persona.dto";
-import {
-  IsDate,
-  IsEmail,
-  IsIn,
-  IsNumber,
-  IsString,
-  Matches,
-  MinLength,
-  Validate,
-} from "class-validator";
+import { IsDate, IsIn, IsNumber, IsString, Validate } from "class-validator";
 import { IsBeforeToday } from "./validador";
 import { ValidRoles } from "./../../auth/interface";
 

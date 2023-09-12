@@ -22,11 +22,16 @@ export class PersonaService {
     private readonly dataSource: DataSource
   ) {}
 
-  async create(createPersonaDto: CreatePersonaDto, ciudad: Ciudad) {
+  async create(
+    createPersonaDto: CreatePersonaDto,
+    ciudad: Ciudad,
+    foto: string
+  ) {
     try {
       const { password, ...params } = createPersonaDto;
       const data = this.personaRepository.create({
         ...params,
+        foto,
         password: bcrypt.hashSync(password, 10),
       });
       let user = null;
@@ -43,12 +48,17 @@ export class PersonaService {
       this.handleExceptions(err, createPersonaDto.email);
     }
   }
-  async update(id: number, updatePersonaDto: UpdatePersonaDto, ciudad: Ciudad) {
+  async update(
+    id: number,
+    updatePersonaDto: UpdatePersonaDto,
+    ciudad: Ciudad,
+    foto: string
+  ) {
+    // si existe una imagen se debe eliminar
     const { id_ciudad, ...params } = updatePersonaDto;
-    const data = await this.personaRepository.preload({
-      id: id,
-      ...params,
-    });
+    const values = { id: id, ...params };
+    // if (foto) values.foto = foto;
+    const data = await this.personaRepository.preload(values);
     if (!data)
       throw new NotFoundException(`La ciudad con el id ${id} no existe!`);
     const queryRunner = this.dataSource.createQueryRunner();
