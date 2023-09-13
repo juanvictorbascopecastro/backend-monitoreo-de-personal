@@ -16,12 +16,11 @@ import { PersonaService } from "./persona.service";
 import { CreatePersonaDto, UpdatePersonaDto } from "./dto/index";
 import { ValidRoles } from "../auth/interface";
 import { Auth } from "../auth/decorators";
-import { CiudadGuard } from "./guards/ciudad.guard";
 import { CiudadDecorator } from "./decorators/ciudad.decorator";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { fileFilter, fileNamer } from "src/files/helpers";
-import { diskStorage } from "multer";
+import { fileFilter } from "src/files/helpers";
 import { FilesService } from "src/files/files.service";
+import { EmailSaveGuard, CiudadGuard, EmailUpdateGuard } from "./guards/";
 
 @Controller("usuarios")
 export class PersonaController {
@@ -31,56 +30,38 @@ export class PersonaController {
   ) {}
 
   @Post()
-  // para la imagen
-  @UseGuards(CiudadGuard)
   @Auth(ValidRoles.admin) // solo admin
+  // para la imagen
+  @UseGuards(CiudadGuard, EmailSaveGuard)
   @UseInterceptors(
     FileInterceptor("foto", {
       fileFilter: fileFilter,
-      storage: diskStorage({
-        destination: "./static/profiles",
-        filename: fileNamer,
-      }),
     })
   )
   create(
-    @Body() createPersonaDto: CreatePersonaDto,
     @CiudadDecorator() ciudad,
-    @UploadedFile() file: Express.Multer.File
+    @UploadedFile() file: Express.Multer.File,
+    @Body() createPersonaDto: CreatePersonaDto
   ) {
-    return this.personaService.create(
-      createPersonaDto,
-      ciudad,
-      file ? file.filename : null
-    );
+    return this.personaService.create(createPersonaDto, ciudad, file);
   }
 
   @Patch(":id")
   @Auth(ValidRoles.admin)
-  @UseGuards(CiudadGuard)
+  @UseGuards(CiudadGuard, EmailUpdateGuard)
   // para la imagen
   @UseInterceptors(
     FileInterceptor("foto", {
       fileFilter: fileFilter,
-      storage: diskStorage({
-        destination: "./static/profiles",
-        filename: fileNamer,
-      }),
     })
   )
   update(
     @Param("id") id: string,
     @Body() updatePersonaDto: UpdatePersonaDto,
-
     @CiudadDecorator() ciudad,
     @UploadedFile() file: Express.Multer.File
   ) {
-    return this.personaService.update(
-      +id,
-      updatePersonaDto,
-      ciudad,
-      file.filename
-    );
+    return this.personaService.update(+id, updatePersonaDto, ciudad, file);
   }
 
   @Get()

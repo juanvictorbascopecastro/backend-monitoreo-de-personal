@@ -7,11 +7,13 @@ export declare class PersonaService {
     private readonly personaRepository;
     private readonly dataSource;
     private readonly logger;
+    private diskStorage;
     constructor(personaRepository: Repository<Persona>, dataSource: DataSource);
-    create(createPersonaDto: CreatePersonaDto, ciudad: Ciudad, foto: string): Promise<Persona>;
-    update(id: number, updatePersonaDto: UpdatePersonaDto, ciudad: Ciudad, foto: string): Promise<Persona>;
+    create(createPersonaDto: CreatePersonaDto, ciudad: Ciudad, file: any): Promise<Persona>;
+    update(id: number, updatePersonaDto: UpdatePersonaDto, ciudad: Ciudad, file: any): Promise<Persona>;
     findAll(): Promise<Persona[]>;
     findOne(id: number): Promise<Persona>;
+    findByEmail(email: string): Promise<Persona>;
     remove(id: number): Promise<Persona>;
     private handleExceptions;
 }

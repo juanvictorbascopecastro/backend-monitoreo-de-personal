@@ -12,11 +12,11 @@ const fs_1 = require("fs");
 const path_1 = require("path");
 let FilesService = exports.FilesService = class FilesService {
     getStaticPersonaFoto(imageName) {
-        const path = (0, path_1.join)(__dirname, "../../static/profiles", imageName);
-        if (!(0, fs_1.existsSync)(path)) {
+        const pathFile = (0, path_1.join)(__dirname, "../../static/profiles", imageName);
+        if (!(0, fs_1.existsSync)(pathFile)) {
             throw new common_1.BadRequestException(`la foto con el nombre ${imageName} no existe!`);
         }
-        return path;
+        return pathFile;
     }
 };
 exports.FilesService = FilesService = __decorate([

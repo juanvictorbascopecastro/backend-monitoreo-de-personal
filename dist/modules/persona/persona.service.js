@@ -19,14 +19,16 @@ const persona_entity_1 = require("./entities/persona.entity");
 const typeorm_2 = require("typeorm");
 const bcrypt = require("bcrypt");
 const entities_1 = require("./entities");
+const files_1 = require("./helpers/files");
 let PersonaService = exports.PersonaService = class PersonaService {
     constructor(personaRepository, dataSource) {
         this.personaRepository = personaRepository;
         this.dataSource = dataSource;
         this.logger = new common_1.Logger("PersonaService");
     }
-    async create(createPersonaDto, ciudad, foto) {
+    async create(createPersonaDto, ciudad, file) {
         try {
+            const foto = await (0, files_1.saveFiles)(file, "profiles");
             const { password, ...params } = createPersonaDto;
             const data = this.personaRepository.create({
                 ...params,
@@ -48,34 +50,25 @@ let PersonaService = exports.PersonaService = class PersonaService {
             this.handleExceptions(err, createPersonaDto.email);
         }
     }
-    async update(id, updatePersonaDto, ciudad, foto) {
-        const { id_ciudad, ...params } = updatePersonaDto;
-        const values = { id: id, ...params };
-        const data = await this.personaRepository.preload(values);
-        if (!data)
-            throw new common_1.NotFoundException(`La ciudad con el id ${id} no existe!`);
-        const queryRunner = this.dataSource.createQueryRunner();
-        await queryRunner.connect();
-        await queryRunner.startTransaction();
+    async update(id, updatePersonaDto, ciudad, file) {
         try {
-            let user;
-            if (params.rol) {
-                user = new entities_1.Usuario();
-                user.rol = params.rol;
-                data.usuario = user;
+            const { id_ciudad, ...params } = updatePersonaDto;
+            const values = { id: id, ...params };
+            const userData = await this.personaRepository.findOneBy({ id });
+            if (!userData) {
+                throw new common_1.NotFoundException(`La persona con el id ${id} no existe!`);
             }
-            if (ciudad) {
-                data.ciudad = ciudad;
+            if (file) {
+                if (userData.foto)
+                    await (0, files_1.removeFiles)(userData.foto);
+                const foto = await (0, files_1.saveFiles)(file, "profiles");
+                values.foto = foto;
             }
-            await queryRunner.manager.save(data);
-            await queryRunner.commitTransaction();
-            await queryRunner.release();
-            return this.findOne(id);
+            Object.assign(userData, values);
+            return await this.personaRepository.save(userData);
         }
         catch (error) {
-            await queryRunner.rollbackTransaction();
-            await queryRunner.release();
-            this.handleExceptions(error, updatePersonaDto.nombre);
+            this.handleExceptions(error, updatePersonaDto.email);
         }
     }
     findAll() {
@@ -92,6 +85,10 @@ let PersonaService = exports.PersonaService = class PersonaService {
             throw new common_1.NotFoundException(`El usuario con el id ${id} no existe!`);
         return data;
     }
+    async findByEmail(email) {
+        const data = await this.personaRepository.findOne({ where: { email } });
+        return data;
+    }
     async remove(id) {
         const data = await this.findOne(id);
         if (!data)
@@ -104,6 +101,8 @@ let PersonaService = exports.PersonaService = class PersonaService {
         if (err.code === "23505" && val) {
             throw new common_1.InternalServerErrorException(`Ya existe el correo ${val}!`);
         }
+        if (err.message)
+            throw new common_1.InternalServerErrorException(err.message);
         throw new common_1.InternalServerErrorException("Error con el servidor");
     }
 };

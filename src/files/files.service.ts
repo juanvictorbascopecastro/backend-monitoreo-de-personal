@@ -5,12 +5,12 @@ import { join } from "path";
 @Injectable()
 export class FilesService {
   getStaticPersonaFoto(imageName: string) {
-    const path = join(__dirname, "../../static/profiles", imageName);
-    if (!existsSync(path)) {
+    const pathFile = join(__dirname, "../../static/profiles", imageName);
+    if (!existsSync(pathFile)) {
       throw new BadRequestException(
         `la foto con el nombre ${imageName} no existe!`
       );
     }
-    return path;
+    return pathFile;
   }
 }
