@@ -44,6 +44,9 @@
     "typeorm": "^0.3.17",
     "typeorm-extension": "^3.0.1"
   },
+  "engines": {
+    "node": ">=14.17.0"
+  },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
