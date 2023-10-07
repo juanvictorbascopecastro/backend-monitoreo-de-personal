@@ -8,7 +8,6 @@ export class AuthController {
 
   @Post("sing-in")
   login(@Body() loginAuthDto: LoginAuthDto) {
-    console.log(loginAuthDto);
     return this.authService.login(loginAuthDto);
   }
 
