@@ -28,7 +28,9 @@ let PersonaService = exports.PersonaService = class PersonaService {
     }
     async create(createPersonaDto, ciudad, file) {
         try {
-            const foto = await (0, files_1.saveFiles)(file, "profiles");
+            let foto = null;
+            if (file)
+                foto = await (0, files_1.saveFiles)(file, "profiles");
             const { password, ...params } = createPersonaDto;
             const data = this.personaRepository.create({
                 ...params,

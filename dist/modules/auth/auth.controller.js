@@ -21,7 +21,6 @@ let AuthController = exports.AuthController = class AuthController {
         this.authService = authService;
     }
     login(loginAuthDto) {
-        console.log(loginAuthDto);
         return this.authService.login(loginAuthDto);
     }
     findOne() {
