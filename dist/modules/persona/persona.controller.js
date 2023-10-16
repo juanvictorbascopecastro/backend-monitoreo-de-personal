@@ -14,24 +14,26 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PersonaController = void 0;
 const common_1 = require("@nestjs/common");
-const persona_service_1 = require("./persona.service");
 const index_1 = require("./dto/index");
 const interface_1 = require("../auth/interface");
 const decorators_1 = require("../auth/decorators");
 const ciudad_decorator_1 = require("./decorators/ciudad.decorator");
 const platform_express_1 = require("@nestjs/platform-express");
-const helpers_1 = require("../../files/helpers");
 const files_service_1 = require("../../files/files.service");
 const guards_1 = require("./guards/");
+const persona_service_1 = require("./persona.service");
+const photo_validators_pipe_1 = require("./pipes/photo.validators.pipe");
 let PersonaController = exports.PersonaController = class PersonaController {
     constructor(personaService, filesService) {
         this.personaService = personaService;
         this.filesService = filesService;
     }
-    create(ciudad, file, createPersonaDto) {
-        return this.personaService.create(createPersonaDto, ciudad, file);
+    async cargarArchivos(ciudad, files, createPersonaDto) {
+        return this.personaService.create(createPersonaDto, ciudad, files[0]);
     }
     update(id, updatePersonaDto, ciudad, file) {
+        if (updatePersonaDto.rol === "")
+            updatePersonaDto.rol = null;
         return this.personaService.update(+id, updatePersonaDto, ciudad, file);
     }
     findAll() {
@@ -51,28 +53,25 @@ let PersonaController = exports.PersonaController = class PersonaController {
 __decorate([
     (0, common_1.Post)(),
     (0, decorators_1.Auth)(interface_1.ValidRoles.admin),
-    (0, common_1.UseGuards)(guards_1.CiudadGuard, guards_1.EmailSaveGuard),
-    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("foto", {
-        fileFilter: helpers_1.fileFilter,
-    })),
+    (0, common_1.UseGuards)(guards_1.CiudadGuard),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)("foto")),
     __param(0, (0, ciudad_decorator_1.CiudadDecorator)()),
-    __param(1, (0, common_1.UploadedFile)()),
+    __param(1, (0, common_1.UploadedFiles)(new photo_validators_pipe_1.PhotoValidatorsPipe())),
     __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, index_1.CreatePersonaDto]),
-    __metadata("design:returntype", void 0)
-], PersonaController.prototype, "create", null);
+    __metadata("design:paramtypes", [Object, Array,
+        index_1.CreatePersonaDto]),
+    __metadata("design:returntype", Promise)
+], PersonaController.prototype, "cargarArchivos", null);
 __decorate([
     (0, common_1.Patch)(":id"),
     (0, decorators_1.Auth)(interface_1.ValidRoles.admin),
-    (0, common_1.UseGuards)(guards_1.CiudadGuard, guards_1.EmailUpdateGuard),
-    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("foto", {
-        fileFilter: helpers_1.fileFilter,
-    })),
+    (0, common_1.UseGuards)(guards_1.CiudadGuard),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("foto")),
     __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, ciudad_decorator_1.CiudadDecorator)()),
-    __param(3, (0, common_1.UploadedFile)()),
+    __param(3, (0, common_1.UploadedFile)(new photo_validators_pipe_1.PhotoValidatorsPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, index_1.UpdatePersonaDto, Object, Object]),
     __metadata("design:returntype", void 0)

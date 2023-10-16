@@ -21,8 +21,9 @@ const bcrypt = require("bcrypt");
 const entities_1 = require("./entities");
 const files_1 = require("./helpers/files");
 let PersonaService = exports.PersonaService = class PersonaService {
-    constructor(personaRepository, dataSource) {
+    constructor(personaRepository, usuarioRepository, dataSource) {
         this.personaRepository = personaRepository;
+        this.usuarioRepository = usuarioRepository;
         this.dataSource = dataSource;
         this.logger = new common_1.Logger("PersonaService");
     }
@@ -31,7 +32,7 @@ let PersonaService = exports.PersonaService = class PersonaService {
             let foto = null;
             if (file)
                 foto = await (0, files_1.saveFiles)(file, "profiles");
-            const { password, ...params } = createPersonaDto;
+            const { password, id_ciudad, ...params } = createPersonaDto;
             const data = this.personaRepository.create({
                 ...params,
                 foto,
@@ -43,6 +44,8 @@ let PersonaService = exports.PersonaService = class PersonaService {
                 user.rol = params.rol;
                 data.usuario = user;
             }
+            console.log(ciudad);
+            console.log(id_ciudad);
             data.ciudad = ciudad;
             await this.personaRepository.save(data);
             delete data.password;
@@ -54,20 +57,53 @@ let PersonaService = exports.PersonaService = class PersonaService {
     }
     async update(id, updatePersonaDto, ciudad, file) {
         try {
-            const { id_ciudad, ...params } = updatePersonaDto;
+            const { id_ciudad, rol, ...params } = updatePersonaDto;
             const values = { id: id, ...params };
             const userData = await this.personaRepository.findOneBy({ id });
             if (!userData) {
                 throw new common_1.NotFoundException(`La persona con el id ${id} no existe!`);
             }
+            if (values.nombre)
+                userData.nombre = values.nombre;
+            if (values.apellido)
+                userData.apellido = values.apellido;
+            if (values.telefono)
+                userData.telefono = values.telefono;
+            if (values.ci)
+                userData.ci = values.ci;
+            if (values.direccion)
+                userData.direccion = values.direccion;
+            if (values.fecha_nacimiento)
+                userData.fecha_nacimiento = values.fecha_nacimiento;
+            userData.ciudad = ciudad;
             if (file) {
                 if (userData.foto)
                     await (0, files_1.removeFiles)(userData.foto);
                 const foto = await (0, files_1.saveFiles)(file, "profiles");
-                values.foto = foto;
+                userData.foto = foto;
             }
-            Object.assign(userData, values);
-            return await this.personaRepository.save(userData);
+            if (rol === null && userData.usuario !== null) {
+                userData.usuario = null;
+                Object.assign(userData, userData);
+                return await this.personaRepository.save(userData);
+            }
+            else if (userData.usuario !== null && userData.usuario.rol !== rol) {
+                userData.usuario.rol = rol;
+                Object.assign(userData, userData);
+                return await this.personaRepository.save(userData);
+            }
+            else if (userData.usuario === null && rol !== null) {
+                const newUsuario = await this.usuarioRepository.create({
+                    rol: rol,
+                });
+                await this.usuarioRepository.save(newUsuario);
+                userData.usuario = newUsuario;
+                return await this.personaRepository.save(userData);
+            }
+            else {
+                Object.assign(userData, userData);
+                return await this.personaRepository.save(userData);
+            }
         }
         catch (error) {
             this.handleExceptions(error, updatePersonaDto.email);
@@ -111,7 +147,9 @@ let PersonaService = exports.PersonaService = class PersonaService {
 exports.PersonaService = PersonaService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(persona_entity_1.Persona)),
+    __param(1, (0, typeorm_1.InjectRepository)(entities_1.Usuario)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.DataSource])
 ], PersonaService);
 //# sourceMappingURL=persona.service.js.map

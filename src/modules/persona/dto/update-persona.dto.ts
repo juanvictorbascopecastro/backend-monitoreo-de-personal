@@ -24,11 +24,12 @@ export class UpdatePersonaDto extends PartialType(CreatePersonaDto) {
   @Validate(IsBeforeToday)
   fecha_nacimiento: string;
 
-  @IsIn([ValidRoles.admin, ValidRoles.usuario], {
+  @IsIn([ValidRoles.admin, ValidRoles.usuario, null, ""], {
     message: "¡El rol no es válido!",
   })
-  rol: string;
+  // @IsString()
+  rol?: string;
 
-  @IsNumber()
+  @IsString()
   id_ciudad: number;
 }

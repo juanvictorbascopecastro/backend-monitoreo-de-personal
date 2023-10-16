@@ -70,6 +70,7 @@ __decorate([
     __metadata("design:type", String)
 ], CreatePersonaDto.prototype, "rol", void 0);
 __decorate([
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)({ message: "El id_ciudad es requerido!" }),
     __metadata("design:type", Number)
 ], CreatePersonaDto.prototype, "id_ciudad", void 0);

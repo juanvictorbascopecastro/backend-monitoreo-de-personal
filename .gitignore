@@ -39,3 +39,4 @@ package-lock.json
 postgres/
 apuntes.txt
 /dist
+/static/profiles

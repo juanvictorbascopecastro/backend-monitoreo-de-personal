@@ -61,7 +61,7 @@ export class CreatePersonaDto {
   })
   rol: string;
 
-  //@IsNumber()
+  @IsString()
   @IsNotEmpty({ message: "El id_ciudad es requerido!" })
   id_ciudad: number;
 }

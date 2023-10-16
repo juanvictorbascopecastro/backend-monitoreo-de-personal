@@ -20,8 +20,9 @@ let CiudadGuard = exports.CiudadGuard = class CiudadGuard {
         const request = context.switchToHttp().getRequest();
         const { id_ciudad } = request.body;
         const ciudad = await this.ciudadService.findOne(id_ciudad);
-        if (!ciudad)
+        if (!ciudad) {
             throw new common_1.NotFoundException(`La ciudad con el id ${id_ciudad} no existe!`);
+        }
         request.ciudad = ciudad;
         return true;
     }

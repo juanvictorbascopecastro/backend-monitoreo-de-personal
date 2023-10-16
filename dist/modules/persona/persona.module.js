@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PersonaModule = void 0;
 const common_1 = require("@nestjs/common");
-const persona_service_1 = require("./persona.service");
 const persona_controller_1 = require("./persona.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const persona_entity_1 = require("./entities/persona.entity");
@@ -16,6 +15,7 @@ const usuarios_entity_1 = require("./entities/usuarios.entity");
 const auth_module_1 = require("./../auth/auth.module");
 const ciudad_module_1 = require("../ciudad/ciudad.module");
 const files_module_1 = require("../../files/files.module");
+const persona_service_1 = require("./persona.service");
 let PersonaModule = exports.PersonaModule = class PersonaModule {
 };
 exports.PersonaModule = PersonaModule = __decorate([

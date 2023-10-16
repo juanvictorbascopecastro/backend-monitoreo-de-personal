@@ -44,13 +44,13 @@ __decorate([
     __metadata("design:type", String)
 ], UpdatePersonaDto.prototype, "fecha_nacimiento", void 0);
 __decorate([
-    (0, class_validator_1.IsIn)([interface_1.ValidRoles.admin, interface_1.ValidRoles.usuario], {
+    (0, class_validator_1.IsIn)([interface_1.ValidRoles.admin, interface_1.ValidRoles.usuario, null, ""], {
         message: "¡El rol no es válido!",
     }),
     __metadata("design:type", String)
 ], UpdatePersonaDto.prototype, "rol", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", Number)
 ], UpdatePersonaDto.prototype, "id_ciudad", void 0);
 //# sourceMappingURL=update-persona.dto.js.map

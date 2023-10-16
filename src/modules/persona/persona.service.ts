@@ -21,6 +21,8 @@ export class PersonaService {
   constructor(
     @InjectRepository(Persona)
     private readonly personaRepository: Repository<Persona>,
+    @InjectRepository(Usuario)
+    private readonly usuarioRepository: Repository<Usuario>,
     private readonly dataSource: DataSource
   ) {}
 
@@ -28,7 +30,7 @@ export class PersonaService {
     try {
       let foto = null;
       if (file) foto = await saveFiles(file, "profiles");
-      const { password, ...params } = createPersonaDto;
+      const { password, id_ciudad, ...params } = createPersonaDto;
       const data = this.personaRepository.create({
         ...params,
         foto,
@@ -40,6 +42,8 @@ export class PersonaService {
         user.rol = params.rol;
         data.usuario = user;
       }
+      console.log(ciudad);
+      console.log(id_ciudad);
       data.ciudad = ciudad;
       await this.personaRepository.save(data);
       delete data.password;
@@ -56,21 +60,45 @@ export class PersonaService {
   ) {
     try {
       // si existe una imagen se debe eliminar
-      const { id_ciudad, ...params } = updatePersonaDto;
+      const { id_ciudad, rol, ...params } = updatePersonaDto;
       const values: any = { id: id, ...params };
       const userData = await this.personaRepository.findOneBy({ id });
       if (!userData) {
         throw new NotFoundException(`La persona con el id ${id} no existe!`); // El usuario no existe
       }
+      if (values.nombre) userData.nombre = values.nombre;
+      if (values.apellido) userData.apellido = values.apellido;
+      if (values.telefono) userData.telefono = values.telefono;
+      if (values.ci) userData.ci = values.ci;
+      if (values.direccion) userData.direccion = values.direccion;
+      if (values.fecha_nacimiento)
+        userData.fecha_nacimiento = values.fecha_nacimiento;
+      userData.ciudad = ciudad;
       if (file) {
         if (userData.foto) await removeFiles(userData.foto); // eliminar la foto anterior
         const foto = await saveFiles(file, "profiles");
-        values.foto = foto;
+        userData.foto = foto;
       }
-      // Actualiza los campos proporcionados
-      Object.assign(userData, values);
-      // Guarda los cambios en la base de datos
-      return await this.personaRepository.save(userData);
+      if (rol === null && userData.usuario !== null) {
+        userData.usuario = null;
+        Object.assign(userData, userData);
+        // await this.usuarioRepository.remove(userData.usuario); // elimina el registro
+        return await this.personaRepository.save(userData);
+      } else if (userData.usuario !== null && userData.usuario.rol !== rol) {
+        userData.usuario.rol = rol;
+        Object.assign(userData, userData);
+        return await this.personaRepository.save(userData);
+      } else if (userData.usuario === null && rol !== null) {
+        const newUsuario = await this.usuarioRepository.create({
+          rol: rol,
+        });
+        await this.usuarioRepository.save(newUsuario);
+        userData.usuario = newUsuario;
+        return await this.personaRepository.save(userData);
+      } else {
+        Object.assign(userData, userData);
+        return await this.personaRepository.save(userData);
+      }
     } catch (error) {
       this.handleExceptions(error, updatePersonaDto.email);
     }
@@ -145,4 +173,18 @@ export class PersonaService {
     if (err.message) throw new InternalServerErrorException(err.message);
     throw new InternalServerErrorException("Error con el servidor");
   }
+
+  // private async updateRol(usuario, rol) {
+  //   if (rol == null && usuario != null)
+  //     await this.usuarioRepository.remove(usuario.id); // elimina el registro
+  //   else if (usuario != null && usuario.rol != rol) {
+  //     // edita el registro
+  //     await this.usuarioRepository.update(usuario.id, { rol });
+  //   } else {
+  //     const newUsuario = await this.usuarioRepository.create({ rol });
+  //     await this.usuarioRepository.save(newUsuario);
+  //     return newUsuario.id;
+  //   }
+  //   return null;
+  // }
 }

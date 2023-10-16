@@ -10,17 +10,22 @@ import {
   UploadedFile,
   UseInterceptors,
   Res,
+  UploadedFiles,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator,
 } from "@nestjs/common";
 import { Response } from "express";
-import { PersonaService } from "./persona.service";
 import { CreatePersonaDto, UpdatePersonaDto } from "./dto/index";
 import { ValidRoles } from "../auth/interface";
 import { Auth } from "../auth/decorators";
 import { CiudadDecorator } from "./decorators/ciudad.decorator";
-import { FileInterceptor } from "@nestjs/platform-express";
+import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import { fileFilter } from "src/files/helpers";
 import { FilesService } from "src/files/files.service";
 import { EmailSaveGuard, CiudadGuard, EmailUpdateGuard } from "./guards/";
+import { PersonaService } from "./persona.service";
+import { PhotoValidatorsPipe } from "./pipes/photo.validators.pipe";
 
 @Controller("usuarios")
 export class PersonaController {
@@ -30,9 +35,23 @@ export class PersonaController {
   ) {}
 
   @Post()
+  @Auth(ValidRoles.admin)
+  @UseGuards(CiudadGuard)
+  @UseInterceptors(FilesInterceptor("foto"))
+  async cargarArchivos(
+    @CiudadDecorator() ciudad,
+    @UploadedFiles(new PhotoValidatorsPipe())
+    files: Array<Express.Multer.File>,
+    @Body() createPersonaDto: CreatePersonaDto
+    // @Body() data: any
+  ) {
+    // console.log(data);
+    return this.personaService.create(createPersonaDto, ciudad, files[0]);
+  }
+  /* @Post()
   @Auth(ValidRoles.admin) // solo admin
-  // para la imagen
   @UseGuards(CiudadGuard, EmailSaveGuard)
+  // para la imagen
   @UseInterceptors(
     FileInterceptor("foto", {
       fileFilter: fileFilter,
@@ -43,24 +62,22 @@ export class PersonaController {
     @UploadedFile() file: Express.Multer.File,
     @Body() createPersonaDto: CreatePersonaDto
   ) {
+    console.log(createPersonaDto);
+    console.log(file);
     return this.personaService.create(createPersonaDto, ciudad, file);
-  }
+  }*/
 
   @Patch(":id")
   @Auth(ValidRoles.admin)
-  @UseGuards(CiudadGuard, EmailUpdateGuard)
-  // para la imagen
-  @UseInterceptors(
-    FileInterceptor("foto", {
-      fileFilter: fileFilter,
-    })
-  )
+  @UseGuards(CiudadGuard)
+  @UseInterceptors(FileInterceptor("foto")) // para la imagen
   update(
     @Param("id") id: string,
     @Body() updatePersonaDto: UpdatePersonaDto,
     @CiudadDecorator() ciudad,
-    @UploadedFile() file: Express.Multer.File
+    @UploadedFile(new PhotoValidatorsPipe()) file: Express.Multer.File
   ) {
+    if (updatePersonaDto.rol === "") updatePersonaDto.rol = null;
     return this.personaService.update(+id, updatePersonaDto, ciudad, file);
   }
 
