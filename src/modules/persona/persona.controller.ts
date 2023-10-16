@@ -46,7 +46,11 @@ export class PersonaController {
     // @Body() data: any
   ) {
     // console.log(data);
-    return this.personaService.create(createPersonaDto, ciudad, files[0]);
+    return this.personaService.create(
+      createPersonaDto,
+      ciudad,
+      files && files.length > 0 ? files[0] : null
+    );
   }
   /* @Post()
   @Auth(ValidRoles.admin) // solo admin
