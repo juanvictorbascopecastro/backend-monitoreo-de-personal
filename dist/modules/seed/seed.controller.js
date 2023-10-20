@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SeedController = void 0;
 const common_1 = require("@nestjs/common");
 const seed_service_1 = require("./seed.service");
-let SeedController = exports.SeedController = class SeedController {
+let SeedController = class SeedController {
     constructor(seedService) {
         this.seedService = seedService;
     }
@@ -20,6 +20,7 @@ let SeedController = exports.SeedController = class SeedController {
         return this.seedService.runSeed();
     }
 };
+exports.SeedController = SeedController;
 __decorate([
     (0, common_1.Post)(),
     __metadata("design:type", Function),

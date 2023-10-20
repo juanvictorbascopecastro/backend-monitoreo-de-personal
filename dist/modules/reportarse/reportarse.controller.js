@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const reportarse_service_1 = require("./reportarse.service");
 const create_reportarse_dto_1 = require("./dto/create-reportarse.dto");
 const update_reportarse_dto_1 = require("./dto/update-reportarse.dto");
-let ReportarseController = exports.ReportarseController = class ReportarseController {
+let ReportarseController = class ReportarseController {
     constructor(reportarseService) {
         this.reportarseService = reportarseService;
     }
@@ -37,6 +37,7 @@ let ReportarseController = exports.ReportarseController = class ReportarseContro
         return this.reportarseService.remove(+id);
     }
 };
+exports.ReportarseController = ReportarseController;
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),

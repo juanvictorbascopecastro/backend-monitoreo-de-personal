@@ -15,8 +15,9 @@ const ciudad_module_1 = require("../ciudad/ciudad.module");
 const departamento_module_1 = require("../departamento/departamento.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const entities_1 = require("../persona/entities");
-let SeedModule = exports.SeedModule = class SeedModule {
+let SeedModule = class SeedModule {
 };
+exports.SeedModule = SeedModule;
 exports.SeedModule = SeedModule = __decorate([
     (0, common_1.Module)({
         controllers: [seed_controller_1.SeedController],

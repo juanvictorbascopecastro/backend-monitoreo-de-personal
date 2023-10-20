@@ -13,7 +13,7 @@ exports.UserRoleGuard = void 0;
 const core_1 = require("@nestjs/core");
 const common_1 = require("@nestjs/common");
 const role_protected_decorator_1 = require("../decorators/role-protected.decorator");
-let UserRoleGuard = exports.UserRoleGuard = class UserRoleGuard {
+let UserRoleGuard = class UserRoleGuard {
     constructor(reflector) {
         this.reflector = reflector;
     }
@@ -37,6 +37,7 @@ let UserRoleGuard = exports.UserRoleGuard = class UserRoleGuard {
             throw new common_1.ForbiddenException(`¡El usuario ${user.nombre} ${user.apellido || ""} debe ser el rol '${validRoles.join(", ")}' para realizar esta acción!`);
     }
 };
+exports.UserRoleGuard = UserRoleGuard;
 exports.UserRoleGuard = UserRoleGuard = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [core_1.Reflector])

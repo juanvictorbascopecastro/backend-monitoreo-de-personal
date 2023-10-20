@@ -85,6 +85,15 @@ export class PersonaController {
     return this.personaService.update(+id, updatePersonaDto, ciudad, file);
   }
 
+  @Patch("estado/:id")
+  @Auth(ValidRoles.admin)
+  @UseGuards(CiudadGuard)
+  @UseInterceptors(FileInterceptor("foto")) // para la imagen
+  updateStatus(@Param("id") id: string, @Body() data) {
+    // console.log(data);
+    return this.personaService.updateStatus(+id, data.estado);
+  }
+
   @Get()
   @Auth(ValidRoles.admin, ValidRoles.usuario)
   findAll() {

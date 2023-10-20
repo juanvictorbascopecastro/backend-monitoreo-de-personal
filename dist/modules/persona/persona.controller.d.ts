@@ -9,6 +9,7 @@ export declare class PersonaController {
     constructor(personaService: PersonaService, filesService: FilesService);
     cargarArchivos(ciudad: any, files: Array<Express.Multer.File>, createPersonaDto: CreatePersonaDto): Promise<import("./entities").Persona>;
     update(id: string, updatePersonaDto: UpdatePersonaDto, ciudad: any, file: Express.Multer.File): Promise<import("./entities").Persona>;
+    updateStatus(id: string, data: any): Promise<import("./entities").Persona>;
     findAll(): Promise<import("./entities").Persona[]>;
     findOne(id: string): Promise<import("./entities").Persona>;
     remove(id: string): Promise<import("./entities").Persona>;

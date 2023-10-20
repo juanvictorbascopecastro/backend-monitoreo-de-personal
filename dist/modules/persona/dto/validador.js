@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IsBeforeToday = void 0;
 const class_validator_1 = require("class-validator");
-let IsBeforeToday = exports.IsBeforeToday = class IsBeforeToday {
+let IsBeforeToday = class IsBeforeToday {
     validate(date) {
         return date <= new Date();
     }
@@ -16,6 +16,7 @@ let IsBeforeToday = exports.IsBeforeToday = class IsBeforeToday {
         return "¡La fecha no debe ser mayor que la fecha actual!";
     }
 };
+exports.IsBeforeToday = IsBeforeToday;
 exports.IsBeforeToday = IsBeforeToday = __decorate([
     (0, class_validator_1.ValidatorConstraint)({ name: "isBeforeToday", async: false })
 ], IsBeforeToday);

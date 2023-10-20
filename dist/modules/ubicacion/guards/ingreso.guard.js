@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.IngresoGuard = void 0;
 const common_1 = require("@nestjs/common");
 const ingreso_service_1 = require("../../ingreso/ingreso.service");
-let IngresoGuard = exports.IngresoGuard = class IngresoGuard {
+let IngresoGuard = class IngresoGuard {
     constructor(ingresoService) {
         this.ingresoService = ingresoService;
     }
@@ -28,6 +28,7 @@ let IngresoGuard = exports.IngresoGuard = class IngresoGuard {
         return true;
     }
 };
+exports.IngresoGuard = IngresoGuard;
 exports.IngresoGuard = IngresoGuard = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [ingreso_service_1.IngresoService])

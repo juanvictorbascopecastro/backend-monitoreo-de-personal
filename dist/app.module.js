@@ -23,8 +23,9 @@ const zonas_estrategica_module_1 = require("./modules/zonas_estrategica/zonas_es
 const ubicacion_module_1 = require("./modules/ubicacion/ubicacion.module");
 const salida_module_1 = require("./modules/salida/salida.module");
 const files_module_1 = require("./files/files.module");
-let AppModule = exports.AppModule = class AppModule {
+let AppModule = class AppModule {
 };
+exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [

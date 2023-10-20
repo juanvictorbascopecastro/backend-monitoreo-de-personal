@@ -25,7 +25,7 @@ __decorate([
     __metadata("design:type", String)
 ], CreateCiudadDto.prototype, "descripcion", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)({ message: "El id_departamento es requerido!" }),
     __metadata("design:type", Number)
 ], CreateCiudadDto.prototype, "id_departamento", void 0);

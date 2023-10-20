@@ -14,8 +14,9 @@ const ciudad_entity_1 = require("./entities/ciudad.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const auth_module_1 = require("../auth/auth.module");
 const departamento_module_1 = require("../departamento/departamento.module");
-let CiudadModule = exports.CiudadModule = class CiudadModule {
+let CiudadModule = class CiudadModule {
 };
+exports.CiudadModule = CiudadModule;
 exports.CiudadModule = CiudadModule = __decorate([
     (0, common_1.Module)({
         controllers: [ciudad_controller_1.CiudadController],

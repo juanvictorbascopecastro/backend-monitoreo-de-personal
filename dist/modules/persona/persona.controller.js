@@ -23,18 +23,21 @@ const files_service_1 = require("../../files/files.service");
 const guards_1 = require("./guards/");
 const persona_service_1 = require("./persona.service");
 const photo_validators_pipe_1 = require("./pipes/photo.validators.pipe");
-let PersonaController = exports.PersonaController = class PersonaController {
+let PersonaController = class PersonaController {
     constructor(personaService, filesService) {
         this.personaService = personaService;
         this.filesService = filesService;
     }
     async cargarArchivos(ciudad, files, createPersonaDto) {
-        return this.personaService.create(createPersonaDto, ciudad, files[0]);
+        return this.personaService.create(createPersonaDto, ciudad, files && files.length > 0 ? files[0] : null);
     }
     update(id, updatePersonaDto, ciudad, file) {
         if (updatePersonaDto.rol === "")
             updatePersonaDto.rol = null;
         return this.personaService.update(+id, updatePersonaDto, ciudad, file);
+    }
+    updateStatus(id, data) {
+        return this.personaService.updateStatus(+id, data.estado);
     }
     findAll() {
         return this.personaService.findAll();
@@ -50,6 +53,7 @@ let PersonaController = exports.PersonaController = class PersonaController {
         res.sendFile(path);
     }
 };
+exports.PersonaController = PersonaController;
 __decorate([
     (0, common_1.Post)(),
     (0, decorators_1.Auth)(interface_1.ValidRoles.admin),
@@ -76,6 +80,17 @@ __decorate([
     __metadata("design:paramtypes", [String, index_1.UpdatePersonaDto, Object, Object]),
     __metadata("design:returntype", void 0)
 ], PersonaController.prototype, "update", null);
+__decorate([
+    (0, common_1.Patch)("estado/:id"),
+    (0, decorators_1.Auth)(interface_1.ValidRoles.admin),
+    (0, common_1.UseGuards)(guards_1.CiudadGuard),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("foto")),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], PersonaController.prototype, "updateStatus", null);
 __decorate([
     (0, common_1.Get)(),
     (0, decorators_1.Auth)(interface_1.ValidRoles.admin, interface_1.ValidRoles.usuario),

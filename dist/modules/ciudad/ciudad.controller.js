@@ -21,7 +21,7 @@ const decorators_1 = require("../auth/decorators");
 const interface_1 = require("../auth/interface");
 const departamento_decorator_1 = require("./decorators/departamento.decorator");
 const departamento_guard_1 = require("./guards/departamento.guard");
-let CiudadController = exports.CiudadController = class CiudadController {
+let CiudadController = class CiudadController {
     constructor(ciudadService) {
         this.ciudadService = ciudadService;
     }
@@ -42,6 +42,7 @@ let CiudadController = exports.CiudadController = class CiudadController {
         return this.ciudadService.remove(+id);
     }
 };
+exports.CiudadController = CiudadController;
 __decorate([
     (0, common_1.Post)(),
     (0, decorators_1.Auth)(interface_1.ValidRoles.admin),

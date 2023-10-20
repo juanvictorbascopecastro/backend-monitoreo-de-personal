@@ -12,8 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Departamento = void 0;
 const ciudad_entity_1 = require("../../ciudad/entities/ciudad.entity");
 const typeorm_1 = require("typeorm");
-let Departamento = exports.Departamento = class Departamento {
+let Departamento = class Departamento {
 };
+exports.Departamento = Departamento;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)("increment"),
     __metadata("design:type", Number)

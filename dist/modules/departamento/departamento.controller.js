@@ -19,7 +19,7 @@ const create_departamento_dto_1 = require("./dto/create-departamento.dto");
 const update_departamento_dto_1 = require("./dto/update-departamento.dto");
 const decorators_1 = require("../auth/decorators");
 const interface_1 = require("../auth/interface");
-let DepartamentoController = exports.DepartamentoController = class DepartamentoController {
+let DepartamentoController = class DepartamentoController {
     constructor(departamentoService) {
         this.departamentoService = departamentoService;
     }
@@ -39,6 +39,7 @@ let DepartamentoController = exports.DepartamentoController = class Departamento
         return this.departamentoService.remove(+id);
     }
 };
+exports.DepartamentoController = DepartamentoController;
 __decorate([
     (0, common_1.Post)(),
     (0, decorators_1.Auth)(interface_1.ValidRoles.admin, interface_1.ValidRoles.usuario),

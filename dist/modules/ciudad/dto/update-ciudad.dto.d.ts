@@ -3,6 +3,6 @@ declare const UpdateCiudadDto_base: import("@nestjs/mapped-types").MappedType<Pa
 export declare class UpdateCiudadDto extends UpdateCiudadDto_base {
     nombre: string;
     descripcion?: string;
-    id_departamento: number;
+    id_departamento?: number;
 }
 export {};

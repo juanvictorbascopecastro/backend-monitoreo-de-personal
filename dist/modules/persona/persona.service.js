@@ -20,7 +20,7 @@ const typeorm_2 = require("typeorm");
 const bcrypt = require("bcrypt");
 const entities_1 = require("./entities");
 const files_1 = require("./helpers/files");
-let PersonaService = exports.PersonaService = class PersonaService {
+let PersonaService = class PersonaService {
     constructor(personaRepository, usuarioRepository, dataSource) {
         this.personaRepository = personaRepository;
         this.usuarioRepository = usuarioRepository;
@@ -44,8 +44,6 @@ let PersonaService = exports.PersonaService = class PersonaService {
                 user.rol = params.rol;
                 data.usuario = user;
             }
-            console.log(ciudad);
-            console.log(id_ciudad);
             data.ciudad = ciudad;
             await this.personaRepository.save(data);
             delete data.password;
@@ -109,6 +107,15 @@ let PersonaService = exports.PersonaService = class PersonaService {
             this.handleExceptions(error, updatePersonaDto.email);
         }
     }
+    async updateStatus(id, estado) {
+        const userData = await this.personaRepository.findOneBy({ id });
+        if (!userData) {
+            throw new common_1.NotFoundException(`La persona con el id ${id} no existe!`);
+        }
+        userData.estado = estado;
+        Object.assign(userData, userData);
+        return await this.personaRepository.save(userData);
+    }
     findAll() {
         try {
             return this.personaRepository.find({});
@@ -144,6 +151,7 @@ let PersonaService = exports.PersonaService = class PersonaService {
         throw new common_1.InternalServerErrorException("Error con el servidor");
     }
 };
+exports.PersonaService = PersonaService;
 exports.PersonaService = PersonaService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(persona_entity_1.Persona)),

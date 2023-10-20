@@ -9,5 +9,6 @@ export declare class UpdatePersonaDto extends UpdatePersonaDto_base {
     fecha_nacimiento: string;
     rol?: string;
     id_ciudad: number;
+    estado: boolean;
 }
 export {};

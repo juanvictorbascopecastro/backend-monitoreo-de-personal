@@ -13,8 +13,9 @@ exports.ZonasEstrategica = void 0;
 const ciudad_entity_1 = require("../../ciudad/entities/ciudad.entity");
 const ingreso_entity_1 = require("../../ingreso/entities/ingreso.entity");
 const typeorm_1 = require("typeorm");
-let ZonasEstrategica = exports.ZonasEstrategica = class ZonasEstrategica {
+let ZonasEstrategica = class ZonasEstrategica {
 };
+exports.ZonasEstrategica = ZonasEstrategica;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)

@@ -15,7 +15,7 @@ const index_1 = require("./index");
 const ingreso_entity_1 = require("../../ingreso/entities/ingreso.entity");
 const ciudad_entity_1 = require("../../ciudad/entities/ciudad.entity");
 const ubicacion_entity_1 = require("../../ubicacion/entities/ubicacion.entity");
-let Persona = exports.Persona = class Persona {
+let Persona = class Persona {
     checkEmail() {
         if (!this.email) {
             this.email = "prueba";
@@ -28,6 +28,7 @@ let Persona = exports.Persona = class Persona {
         this.checkFieldsBeforeInsert();
     }
 };
+exports.Persona = Persona;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)

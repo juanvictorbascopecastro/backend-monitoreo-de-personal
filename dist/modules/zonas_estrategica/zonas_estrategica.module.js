@@ -14,8 +14,9 @@ const typeorm_1 = require("@nestjs/typeorm");
 const zonas_estrategica_entity_1 = require("./entities/zonas_estrategica.entity");
 const auth_module_1 = require("../auth/auth.module");
 const ciudad_module_1 = require("../ciudad/ciudad.module");
-let ZonasEstrategicaModule = exports.ZonasEstrategicaModule = class ZonasEstrategicaModule {
+let ZonasEstrategicaModule = class ZonasEstrategicaModule {
 };
+exports.ZonasEstrategicaModule = ZonasEstrategicaModule;
 exports.ZonasEstrategicaModule = ZonasEstrategicaModule = __decorate([
     (0, common_1.Module)({
         controllers: [zonas_estrategica_controller_1.ZonasEstrategicaController],

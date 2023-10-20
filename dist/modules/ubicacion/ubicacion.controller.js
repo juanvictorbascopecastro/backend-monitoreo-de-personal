@@ -25,7 +25,7 @@ const ingreso_entity_1 = require("../ingreso/entities/ingreso.entity");
 const persona_decorator_1 = require("../ingreso/decorators/persona.decorator");
 const entities_1 = require("../persona/entities");
 const ingreso_guard_1 = require("./guards/ingreso.guard");
-let UbicacionController = exports.UbicacionController = class UbicacionController {
+let UbicacionController = class UbicacionController {
     constructor(ubicacionService) {
         this.ubicacionService = ubicacionService;
     }
@@ -48,6 +48,7 @@ let UbicacionController = exports.UbicacionController = class UbicacionControlle
         return this.ubicacionService.remove(+id);
     }
 };
+exports.UbicacionController = UbicacionController;
 __decorate([
     (0, common_1.Post)(),
     (0, decorators_1.Auth)(interface_1.ValidRoles.admin, interface_1.ValidRoles.usuario),

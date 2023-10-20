@@ -12,8 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Usuario = void 0;
 const typeorm_1 = require("typeorm");
 const index_1 = require("./index");
-let Usuario = exports.Usuario = class Usuario {
+let Usuario = class Usuario {
 };
+exports.Usuario = Usuario;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)

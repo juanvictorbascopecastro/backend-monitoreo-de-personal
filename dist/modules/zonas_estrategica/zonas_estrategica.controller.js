@@ -21,7 +21,7 @@ const decorators_1 = require("../auth/decorators");
 const interface_1 = require("../auth/interface");
 const ciudad_guard_1 = require("../persona/guards/ciudad.guard");
 const ciudad_decorator_1 = require("../persona/decorators/ciudad.decorator");
-let ZonasEstrategicaController = exports.ZonasEstrategicaController = class ZonasEstrategicaController {
+let ZonasEstrategicaController = class ZonasEstrategicaController {
     constructor(zonasEstrategicaService) {
         this.zonasEstrategicaService = zonasEstrategicaService;
     }
@@ -41,6 +41,7 @@ let ZonasEstrategicaController = exports.ZonasEstrategicaController = class Zona
         return this.zonasEstrategicaService.remove(+id);
     }
 };
+exports.ZonasEstrategicaController = ZonasEstrategicaController;
 __decorate([
     (0, common_1.Post)(),
     (0, decorators_1.Auth)(interface_1.ValidRoles.admin),

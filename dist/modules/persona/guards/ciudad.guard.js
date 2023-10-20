@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CiudadGuard = void 0;
 const common_1 = require("@nestjs/common");
 const ciudad_service_1 = require("../../ciudad/ciudad.service");
-let CiudadGuard = exports.CiudadGuard = class CiudadGuard {
+let CiudadGuard = class CiudadGuard {
     constructor(ciudadService) {
         this.ciudadService = ciudadService;
     }
@@ -27,6 +27,7 @@ let CiudadGuard = exports.CiudadGuard = class CiudadGuard {
         return true;
     }
 };
+exports.CiudadGuard = CiudadGuard;
 exports.CiudadGuard = CiudadGuard = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [ciudad_service_1.CiudadService])

@@ -22,7 +22,7 @@ const decorators_1 = require("../auth/decorators");
 const ingreso_guard_1 = require("../salida/guards/ingreso.guard");
 const ingreso_decorators_1 = require("../ubicacion/decorators/ingreso.decorators");
 const ingreso_entity_1 = require("../ingreso/entities/ingreso.entity");
-let SalidaController = exports.SalidaController = class SalidaController {
+let SalidaController = class SalidaController {
     constructor(salidaService) {
         this.salidaService = salidaService;
     }
@@ -39,6 +39,7 @@ let SalidaController = exports.SalidaController = class SalidaController {
         return this.salidaService.remove(+id);
     }
 };
+exports.SalidaController = SalidaController;
 __decorate([
     (0, common_1.Post)(),
     (0, decorators_1.Auth)(interface_1.ValidRoles.admin, interface_1.ValidRoles.usuario),

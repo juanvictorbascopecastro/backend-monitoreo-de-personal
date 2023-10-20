@@ -20,7 +20,7 @@ const typeorm_2 = require("typeorm");
 const config_1 = require("@nestjs/config");
 const common_1 = require("@nestjs/common");
 const entities_1 = require("../../persona/entities");
-let JwtStrategy = exports.JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy) {
+let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy) {
     constructor(personaRepository, configService) {
         super({
             secretOrKey: configService.get("JWR_SECRET"),
@@ -38,6 +38,7 @@ let JwtStrategy = exports.JwtStrategy = class JwtStrategy extends (0, passport_1
         return user;
     }
 };
+exports.JwtStrategy = JwtStrategy;
 exports.JwtStrategy = JwtStrategy = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(entities_1.Persona)),

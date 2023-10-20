@@ -14,8 +14,9 @@ const entities_1 = require("../../persona/entities");
 const departamento_entity_1 = require("../../departamento/entities/departamento.entity");
 const typeorm_1 = require("typeorm");
 const zonas_estrategica_entity_1 = require("../../zonas_estrategica/entities/zonas_estrategica.entity");
-let Ciudad = exports.Ciudad = class Ciudad {
+let Ciudad = class Ciudad {
 };
+exports.Ciudad = Ciudad;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)

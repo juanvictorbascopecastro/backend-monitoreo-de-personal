@@ -14,8 +14,9 @@ const typeorm_1 = require("@nestjs/typeorm");
 const salida_entity_1 = require("./entities/salida.entity");
 const ingreso_module_1 = require("../ingreso/ingreso.module");
 const auth_module_1 = require("../auth/auth.module");
-let SalidaModule = exports.SalidaModule = class SalidaModule {
+let SalidaModule = class SalidaModule {
 };
+exports.SalidaModule = SalidaModule;
 exports.SalidaModule = SalidaModule = __decorate([
     (0, common_1.Module)({
         controllers: [salida_controller_1.SalidaController],

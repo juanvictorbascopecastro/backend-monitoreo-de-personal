@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZonaGuard = void 0;
 const common_1 = require("@nestjs/common");
 const zonas_estrategica_service_1 = require("../../zonas_estrategica/zonas_estrategica.service");
-let ZonaGuard = exports.ZonaGuard = class ZonaGuard {
+let ZonaGuard = class ZonaGuard {
     constructor(zonaEstrategicaService) {
         this.zonaEstrategicaService = zonaEstrategicaService;
     }
@@ -26,6 +26,7 @@ let ZonaGuard = exports.ZonaGuard = class ZonaGuard {
         return true;
     }
 };
+exports.ZonaGuard = ZonaGuard;
 exports.ZonaGuard = ZonaGuard = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [zonas_estrategica_service_1.ZonasEstrategicaService])

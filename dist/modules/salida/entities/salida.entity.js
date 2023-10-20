@@ -12,8 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Salida = void 0;
 const ingreso_entity_1 = require("../../ingreso/entities/ingreso.entity");
 const typeorm_1 = require("typeorm");
-let Salida = exports.Salida = class Salida {
+let Salida = class Salida {
 };
+exports.Salida = Salida;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)

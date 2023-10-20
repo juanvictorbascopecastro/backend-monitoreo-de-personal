@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const entities_1 = require("./entities");
-let ReportarseService = exports.ReportarseService = class ReportarseService {
+let ReportarseService = class ReportarseService {
     constructor(reportarseRepository, reportarseRepositoryImage) {
         this.reportarseRepository = reportarseRepository;
         this.reportarseRepositoryImage = reportarseRepositoryImage;
@@ -81,6 +81,7 @@ let ReportarseService = exports.ReportarseService = class ReportarseService {
         throw new common_1.InternalServerErrorException("Error con el servidor");
     }
 };
+exports.ReportarseService = ReportarseService;
 exports.ReportarseService = ReportarseService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(entities_1.Reportarse)),

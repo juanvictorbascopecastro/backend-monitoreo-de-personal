@@ -24,7 +24,7 @@ const persona_decorator_1 = require("./decorators/persona.decorator");
 const zona_guard_1 = require("./guards/zona.guard");
 const zona_decorator_1 = require("./decorators/zona.decorator");
 const zonas_estrategica_entity_1 = require("../zonas_estrategica/entities/zonas_estrategica.entity");
-let IngresoController = exports.IngresoController = class IngresoController {
+let IngresoController = class IngresoController {
     constructor(ingresoService) {
         this.ingresoService = ingresoService;
     }
@@ -44,6 +44,7 @@ let IngresoController = exports.IngresoController = class IngresoController {
         return this.ingresoService.remove(+id);
     }
 };
+exports.IngresoController = IngresoController;
 __decorate([
     (0, common_1.Post)(),
     (0, decorators_1.Auth)(),

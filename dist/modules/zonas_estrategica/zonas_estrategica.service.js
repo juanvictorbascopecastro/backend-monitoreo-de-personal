@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const zonas_estrategica_entity_1 = require("./entities/zonas_estrategica.entity");
 const typeorm_2 = require("typeorm");
-let ZonasEstrategicaService = exports.ZonasEstrategicaService = class ZonasEstrategicaService {
+let ZonasEstrategicaService = class ZonasEstrategicaService {
     constructor(zonasEstrategicaRepository, dataSource) {
         this.zonasEstrategicaRepository = zonasEstrategicaRepository;
         this.dataSource = dataSource;
@@ -119,6 +119,7 @@ let ZonasEstrategicaService = exports.ZonasEstrategicaService = class ZonasEstra
         throw new common_1.InternalServerErrorException("Error con el servidor!");
     }
 };
+exports.ZonasEstrategicaService = ZonasEstrategicaService;
 exports.ZonasEstrategicaService = ZonasEstrategicaService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(zonas_estrategica_entity_1.ZonasEstrategica)),

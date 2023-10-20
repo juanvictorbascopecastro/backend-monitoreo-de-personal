@@ -15,7 +15,7 @@ export class CreateCiudadDto {
   @IsString()
   descripcion?: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty({ message: "El id_departamento es requerido!" })
   id_departamento: number;
 }

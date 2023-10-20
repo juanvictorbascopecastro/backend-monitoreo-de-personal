@@ -19,7 +19,7 @@ const platform_express_1 = require("@nestjs/platform-express");
 const helpers_1 = require("./helpers");
 const multer_1 = require("multer");
 const config_1 = require("@nestjs/config");
-let FilesController = exports.FilesController = class FilesController {
+let FilesController = class FilesController {
     constructor(filesService, configService) {
         this.filesService = filesService;
         this.configService = configService;
@@ -33,6 +33,7 @@ let FilesController = exports.FilesController = class FilesController {
         res.sendFile(path);
     }
 };
+exports.FilesController = FilesController;
 __decorate([
     (0, common_1.Post)("persona"),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("foto", {

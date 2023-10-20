@@ -10,7 +10,7 @@ exports.FilesService = void 0;
 const common_1 = require("@nestjs/common");
 const fs_1 = require("fs");
 const path_1 = require("path");
-let FilesService = exports.FilesService = class FilesService {
+let FilesService = class FilesService {
     getStaticPersonaFoto(imageName) {
         const pathFile = (0, path_1.join)(__dirname, "../../static/profiles", imageName);
         if (!(0, fs_1.existsSync)(pathFile)) {
@@ -19,6 +19,7 @@ let FilesService = exports.FilesService = class FilesService {
         return pathFile;
     }
 };
+exports.FilesService = FilesService;
 exports.FilesService = FilesService = __decorate([
     (0, common_1.Injectable)()
 ], FilesService);

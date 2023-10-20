@@ -13,8 +13,9 @@ const departamento_controller_1 = require("./departamento.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const departamento_entity_1 = require("./entities/departamento.entity");
 const auth_module_1 = require("../auth/auth.module");
-let DepartamentoModule = exports.DepartamentoModule = class DepartamentoModule {
+let DepartamentoModule = class DepartamentoModule {
 };
+exports.DepartamentoModule = DepartamentoModule;
 exports.DepartamentoModule = DepartamentoModule = __decorate([
     (0, common_1.Module)({
         controllers: [departamento_controller_1.DepartamentoController],

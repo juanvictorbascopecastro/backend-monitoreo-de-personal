@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PersonaGuard = void 0;
 const common_1 = require("@nestjs/common");
 const persona_service_1 = require("../../persona/persona.service");
-let PersonaGuard = exports.PersonaGuard = class PersonaGuard {
+let PersonaGuard = class PersonaGuard {
     constructor(personaService) {
         this.personaService = personaService;
     }
@@ -26,6 +26,7 @@ let PersonaGuard = exports.PersonaGuard = class PersonaGuard {
         return true;
     }
 };
+exports.PersonaGuard = PersonaGuard;
 exports.PersonaGuard = PersonaGuard = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [persona_service_1.PersonaService])

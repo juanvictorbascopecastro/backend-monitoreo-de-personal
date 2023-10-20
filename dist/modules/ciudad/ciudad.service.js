@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 const ciudad_entity_1 = require("./entities/ciudad.entity");
 const typeorm_2 = require("@nestjs/typeorm");
-let CiudadService = exports.CiudadService = class CiudadService {
+let CiudadService = class CiudadService {
     constructor(ciudadRepository, dataSource) {
         this.ciudadRepository = ciudadRepository;
         this.dataSource = dataSource;
@@ -96,6 +96,7 @@ let CiudadService = exports.CiudadService = class CiudadService {
         throw new common_1.InternalServerErrorException("Error con el servidor!");
     }
 };
+exports.CiudadService = CiudadService;
 exports.CiudadService = CiudadService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_2.InjectRepository)(ciudad_entity_1.Ciudad)),

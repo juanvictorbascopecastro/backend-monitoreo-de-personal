@@ -19,17 +19,14 @@ exports.UpdateCiudadDto = UpdateCiudadDto;
 __decorate([
     (0, class_validator_1.IsString)({ message: "El nombre es de tipo string!" }),
     (0, class_validator_1.MinLength)(1),
-    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateCiudadDto.prototype, "nombre", void 0);
 __decorate([
-    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UpdateCiudadDto.prototype, "descripcion", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", Number)
 ], UpdateCiudadDto.prototype, "id_departamento", void 0);
 //# sourceMappingURL=update-ciudad.dto.js.map

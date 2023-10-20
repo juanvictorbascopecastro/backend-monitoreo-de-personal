@@ -13,6 +13,7 @@ export declare class PersonaService {
     constructor(personaRepository: Repository<Persona>, usuarioRepository: Repository<Usuario>, dataSource: DataSource);
     create(createPersonaDto: CreatePersonaDto, ciudad: Ciudad, file: any): Promise<Persona>;
     update(id: number, updatePersonaDto: UpdatePersonaDto, ciudad: Ciudad, file: any): Promise<Persona>;
+    updateStatus(id: number, estado: boolean): Promise<Persona>;
     findAll(): Promise<Persona[]>;
     findOne(id: number): Promise<Persona>;
     findByEmail(email: string): Promise<Persona>;

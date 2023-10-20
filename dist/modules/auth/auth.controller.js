@@ -16,7 +16,7 @@ exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const login_auth_dto_1 = require("./dto/login-auth.dto");
-let AuthController = exports.AuthController = class AuthController {
+let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
@@ -33,6 +33,7 @@ let AuthController = exports.AuthController = class AuthController {
         return this.authService.deleteProfile();
     }
 };
+exports.AuthController = AuthController;
 __decorate([
     (0, common_1.Post)("sing-in"),
     __param(0, (0, common_1.Body)()),

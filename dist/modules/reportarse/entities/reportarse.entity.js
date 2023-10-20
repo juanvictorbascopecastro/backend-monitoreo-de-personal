@@ -12,8 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Reportarse = void 0;
 const typeorm_1 = require("typeorm");
 const reportarse_imagen_entity_1 = require("./reportarse.imagen.entity");
-let Reportarse = exports.Reportarse = class Reportarse {
+let Reportarse = class Reportarse {
 };
+exports.Reportarse = Reportarse;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)

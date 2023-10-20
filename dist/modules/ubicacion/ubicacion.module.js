@@ -15,8 +15,9 @@ const ubicacion_entity_1 = require("./entities/ubicacion.entity");
 const persona_module_1 = require("../persona/persona.module");
 const ingreso_module_1 = require("../ingreso/ingreso.module");
 const auth_module_1 = require("../auth/auth.module");
-let UbicacionModule = exports.UbicacionModule = class UbicacionModule {
+let UbicacionModule = class UbicacionModule {
 };
+exports.UbicacionModule = UbicacionModule;
 exports.UbicacionModule = UbicacionModule = __decorate([
     (0, common_1.Module)({
         controllers: [ubicacion_controller_1.UbicacionController],

@@ -15,8 +15,9 @@ const ingreso_entity_1 = require("./entities/ingreso.entity");
 const auth_module_1 = require("../auth/auth.module");
 const persona_module_1 = require("../persona/persona.module");
 const zonas_estrategica_module_1 = require("../zonas_estrategica/zonas_estrategica.module");
-let IngresoModule = exports.IngresoModule = class IngresoModule {
+let IngresoModule = class IngresoModule {
 };
+exports.IngresoModule = IngresoModule;
 exports.IngresoModule = IngresoModule = __decorate([
     (0, common_1.Module)({
         controllers: [ingreso_controller_1.IngresoController],

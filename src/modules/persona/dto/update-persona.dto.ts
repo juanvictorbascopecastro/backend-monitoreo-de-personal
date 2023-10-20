@@ -1,6 +1,13 @@
 import { PartialType } from "@nestjs/mapped-types";
 import { CreatePersonaDto } from "./create-persona.dto";
-import { IsDate, IsIn, IsNumber, IsString, Validate } from "class-validator";
+import {
+  IsBoolean,
+  IsDate,
+  IsIn,
+  IsNumber,
+  IsString,
+  Validate,
+} from "class-validator";
 import { IsBeforeToday } from "./validador";
 import { ValidRoles } from "./../../auth/interface";
 
@@ -32,4 +39,7 @@ export class UpdatePersonaDto extends PartialType(CreatePersonaDto) {
 
   @IsString()
   id_ciudad: number;
+
+  @IsBoolean()
+  estado: boolean;
 }

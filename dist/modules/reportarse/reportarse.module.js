@@ -12,8 +12,9 @@ const reportarse_service_1 = require("./reportarse.service");
 const reportarse_controller_1 = require("./reportarse.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const entities_1 = require("./entities");
-let ReportarseModule = exports.ReportarseModule = class ReportarseModule {
+let ReportarseModule = class ReportarseModule {
 };
+exports.ReportarseModule = ReportarseModule;
 exports.ReportarseModule = ReportarseModule = __decorate([
     (0, common_1.Module)({
         controllers: [reportarse_controller_1.ReportarseController],

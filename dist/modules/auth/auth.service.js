@@ -19,7 +19,7 @@ const typeorm_1 = require("typeorm");
 const bcrypt = require("bcrypt");
 const typeorm_2 = require("@nestjs/typeorm");
 const entities_1 = require("../persona/entities");
-let AuthService = exports.AuthService = class AuthService {
+let AuthService = class AuthService {
     constructor(personaRepository, jwtService) {
         this.personaRepository = personaRepository;
         this.jwtService = jwtService;
@@ -74,6 +74,7 @@ let AuthService = exports.AuthService = class AuthService {
         return token;
     }
 };
+exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_2.InjectRepository)(entities_1.Persona)),

@@ -20,7 +20,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const entities_1 = require("../persona/entities");
 const typeorm_2 = require("typeorm");
 const user_data_1 = require("./data/user.data");
-let SeedService = exports.SeedService = class SeedService {
+let SeedService = class SeedService {
     constructor(departamentoService, ciudadService, userRepository) {
         this.departamentoService = departamentoService;
         this.ciudadService = ciudadService;
@@ -62,6 +62,7 @@ let SeedService = exports.SeedService = class SeedService {
         return dbUsers;
     }
 };
+exports.SeedService = SeedService;
 exports.SeedService = SeedService = __decorate([
     (0, common_1.Injectable)(),
     __param(2, (0, typeorm_1.InjectRepository)(entities_1.Persona)),

@@ -53,4 +53,8 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", Number)
 ], UpdatePersonaDto.prototype, "id_ciudad", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], UpdatePersonaDto.prototype, "estado", void 0);
 //# sourceMappingURL=update-persona.dto.js.map

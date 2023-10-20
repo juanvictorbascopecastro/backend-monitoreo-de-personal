@@ -42,8 +42,6 @@ export class PersonaService {
         user.rol = params.rol;
         data.usuario = user;
       }
-      console.log(ciudad);
-      console.log(id_ciudad);
       data.ciudad = ciudad;
       await this.personaRepository.save(data);
       delete data.password;
@@ -136,6 +134,15 @@ export class PersonaService {
     //   // if (error.message) this.handleExceptions(error, null);
     //   this.handleExceptions(error, updatePersonaDto.email);
     // }
+  }
+  async updateStatus(id: number, estado: boolean) {
+    const userData = await this.personaRepository.findOneBy({ id });
+    if (!userData) {
+      throw new NotFoundException(`La persona con el id ${id} no existe!`); // El usuario no existe
+    }
+    userData.estado = estado;
+    Object.assign(userData, userData);
+    return await this.personaRepository.save(userData);
   }
   findAll() {
     try {

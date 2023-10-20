@@ -13,8 +13,9 @@ exports.Ubicacion = void 0;
 const ingreso_entity_1 = require("../../ingreso/entities/ingreso.entity");
 const entities_1 = require("../../persona/entities");
 const typeorm_1 = require("typeorm");
-let Ubicacion = exports.Ubicacion = class Ubicacion {
+let Ubicacion = class Ubicacion {
 };
+exports.Ubicacion = Ubicacion;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)

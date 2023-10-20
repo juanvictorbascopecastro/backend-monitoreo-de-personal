@@ -15,8 +15,9 @@ const entities_1 = require("../../persona/entities");
 const typeorm_1 = require("typeorm");
 const ubicacion_entity_1 = require("../../ubicacion/entities/ubicacion.entity");
 const salida_entity_1 = require("../../salida/entities/salida.entity");
-let Ingreso = exports.Ingreso = class Ingreso {
+let Ingreso = class Ingreso {
 };
+exports.Ingreso = Ingreso;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)

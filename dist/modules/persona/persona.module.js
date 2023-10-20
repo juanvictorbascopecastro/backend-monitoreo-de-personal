@@ -16,8 +16,9 @@ const auth_module_1 = require("./../auth/auth.module");
 const ciudad_module_1 = require("../ciudad/ciudad.module");
 const files_module_1 = require("../../files/files.module");
 const persona_service_1 = require("./persona.service");
-let PersonaModule = exports.PersonaModule = class PersonaModule {
+let PersonaModule = class PersonaModule {
 };
+exports.PersonaModule = PersonaModule;
 exports.PersonaModule = PersonaModule = __decorate([
     (0, common_1.Module)({
         controllers: [persona_controller_1.PersonaController],
